@@ -159,7 +159,22 @@ struct textures {
         SKTexture(imageNamed: "346"),
         SKTexture(imageNamed: "347")
     ]
-
+    // todo deministe
+    
+    static let demo_devant: SKTexture? = nil 
     
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

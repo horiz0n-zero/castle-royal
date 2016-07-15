@@ -201,7 +201,9 @@ class GameScene: SKScene {
                        
                         
                         if heroPosable == nil && selectionCarte.pier.carte != nil {
-                            // todo switch
+                        
+                            
+                            
                            let mage = mageSpirituel()
                            heroPosable = mage
                            mage.info = heroInfo(colonne: ile.colonne, ranger: ile.ranger)
