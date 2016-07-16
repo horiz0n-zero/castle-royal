@@ -163,7 +163,6 @@ struct textures {
     
     static let demo_devant_im = [
         SKTexture(imageNamed: "d1"),
-        SKTexture(imageNamed: "d1"),
         SKTexture(imageNamed: "d2"),
         SKTexture(imageNamed: "d3"),
         SKTexture(imageNamed: "d4"),
@@ -322,6 +321,171 @@ struct textures {
         SKTexture(imageNamed: "d119"),
         SKTexture(imageNamed: "d120"),
         ]
+    
+    
+    //  moltanica :
+    
+    static let molta_devant_im = [
+        SKTexture(imageNamed: "m1"),
+        SKTexture(imageNamed: "m2"),
+        SKTexture(imageNamed: "m3"),
+        SKTexture(imageNamed: "m4"),
+        SKTexture(imageNamed: "m5"),
+        SKTexture(imageNamed: "m6"),
+        SKTexture(imageNamed: "m7"),
+        SKTexture(imageNamed: "m8")
+    ]
+    static let molta_semi_devant_im = [
+        SKTexture(imageNamed: "m9"),
+        SKTexture(imageNamed: "m10"),
+        SKTexture(imageNamed: "m11"),
+        SKTexture(imageNamed: "m12"),
+        SKTexture(imageNamed: "m13"),
+        SKTexture(imageNamed: "m14"),
+        SKTexture(imageNamed: "m15"),
+        SKTexture(imageNamed: "m16")
+    ]
+    static let molta_profil_im = [
+        SKTexture(imageNamed: "m17"),
+        SKTexture(imageNamed: "m18"),
+        SKTexture(imageNamed: "m19"),
+        SKTexture(imageNamed: "m20"),
+        SKTexture(imageNamed: "m21"),
+        SKTexture(imageNamed: "m22"),
+        SKTexture(imageNamed: "m23"),
+        SKTexture(imageNamed: "m24")
+    ]
+    static let molta_semi_derriere_im = [
+        SKTexture(imageNamed: "m25"),
+        SKTexture(imageNamed: "m26"),
+        SKTexture(imageNamed: "m27"),
+        SKTexture(imageNamed: "m28"),
+        SKTexture(imageNamed: "m29"),
+        SKTexture(imageNamed: "m30"),
+        SKTexture(imageNamed: "m31"),
+        SKTexture(imageNamed: "m32")
+        
+    ]
+    static let molta_derriere_im = [
+        SKTexture(imageNamed: "m33"),
+        SKTexture(imageNamed: "m34"),
+        SKTexture(imageNamed: "m35"),
+        SKTexture(imageNamed: "m36"),
+        SKTexture(imageNamed: "m37"),
+        SKTexture(imageNamed: "m38"),
+        SKTexture(imageNamed: "m39"),
+        SKTexture(imageNamed: "m40")
+        
+    ]
+    // immobile
+    static let molta_devant = [
+        SKTexture(imageNamed: "m41"),
+        SKTexture(imageNamed: "m42"),
+        SKTexture(imageNamed: "m43"),
+        SKTexture(imageNamed: "m44"),
+        SKTexture(imageNamed: "m45"),
+        SKTexture(imageNamed: "m46"),
+        SKTexture(imageNamed: "m47"),
+        SKTexture(imageNamed: "m48")
+        
+    ]
+    static let molta_semi_devant = [
+        SKTexture(imageNamed: "m49"),
+        SKTexture(imageNamed: "m50"),
+        SKTexture(imageNamed: "m51"),
+        SKTexture(imageNamed: "m52"),
+        SKTexture(imageNamed: "m53"),
+        SKTexture(imageNamed: "m54"),
+        SKTexture(imageNamed: "m55"),
+        SKTexture(imageNamed: "m56")
+        
+    ]
+    static let molta_profil = [
+        SKTexture(imageNamed: "m57"),
+        SKTexture(imageNamed: "m58"),
+        SKTexture(imageNamed: "m59"),
+        SKTexture(imageNamed: "m60"),
+        SKTexture(imageNamed: "m61"),
+        SKTexture(imageNamed: "m62"),
+        SKTexture(imageNamed: "m63"),
+        SKTexture(imageNamed: "m64")
+        
+    ]
+    static let molta_semi_derriere = [
+        SKTexture(imageNamed: "m65"),
+        SKTexture(imageNamed: "m66"),
+        SKTexture(imageNamed: "m67"),
+        SKTexture(imageNamed: "m68"),
+        SKTexture(imageNamed: "m69"),
+        SKTexture(imageNamed: "m70"),
+        SKTexture(imageNamed: "m71"),
+        SKTexture(imageNamed: "m72")
+        
+    ]
+    static let molta_derriere = [
+        SKTexture(imageNamed: "m73"),
+        SKTexture(imageNamed: "m74"),
+        SKTexture(imageNamed: "m75"),
+        SKTexture(imageNamed: "m76"),
+        SKTexture(imageNamed: "m77"),
+        SKTexture(imageNamed: "m78"),
+        SKTexture(imageNamed: "m79"),
+        SKTexture(imageNamed: "m80")
+        
+    ]
+    // attaque :
+    static let molta_devant_atk = [
+        SKTexture(imageNamed: "m81"),
+        SKTexture(imageNamed: "m82"),
+        SKTexture(imageNamed: "m83"),
+        SKTexture(imageNamed: "m84"),
+        ]
+    static let molta_semi_devant_atk = [
+        SKTexture(imageNamed: "m85"),
+        SKTexture(imageNamed: "m86"),
+        SKTexture(imageNamed: "m87"),
+        SKTexture(imageNamed: "m88"),
+        SKTexture(imageNamed: "m89"),
+        SKTexture(imageNamed: "m90"),
+        SKTexture(imageNamed: "m91"),
+        SKTexture(imageNamed: "m92")
+    ]
+    static let molta_profil_atk = [
+        SKTexture(imageNamed: "m93"),
+        SKTexture(imageNamed: "m94"),
+        SKTexture(imageNamed: "m95"),
+        SKTexture(imageNamed: "m96"),
+        SKTexture(imageNamed: "m97"),
+        SKTexture(imageNamed: "m98"),
+        SKTexture(imageNamed: "m99"),
+        SKTexture(imageNamed: "m100")
+    ]
+    static let molta_semi_derriere_atk = [
+        SKTexture(imageNamed: "m101"),
+        SKTexture(imageNamed: "m102"),
+        SKTexture(imageNamed: "m103"),
+        SKTexture(imageNamed: "m104"),
+        SKTexture(imageNamed: "m105"),
+        SKTexture(imageNamed: "m106"),
+        SKTexture(imageNamed: "m107"),
+        SKTexture(imageNamed: "m108")
+        
+    ]
+    static let molta_derriere_atk = [
+        SKTexture(imageNamed: "m109"),
+        SKTexture(imageNamed: "m110"),
+        SKTexture(imageNamed: "m111"),
+        SKTexture(imageNamed: "m112"),
+        SKTexture(imageNamed: "m113"),
+        SKTexture(imageNamed: "m114"),
+        SKTexture(imageNamed: "m115"),
+        SKTexture(imageNamed: "m116"),
+        SKTexture(imageNamed: "m117"),
+        SKTexture(imageNamed: "m118"),
+        SKTexture(imageNamed: "m119"),
+        SKTexture(imageNamed: "m120"),
+        ]
+
 }
 
 

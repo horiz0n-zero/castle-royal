@@ -103,7 +103,10 @@ class GameScene: SKScene {
                let demo = superHero as! demoniste
                demo.reflexion()
             }
-            
+            if superHero is moltanica {
+                let molta = superHero as! moltanica
+                molta.reflexion()
+            }
         }
         
     }
@@ -111,7 +114,7 @@ class GameScene: SKScene {
     func INITpierre() {
         
         func randomCarte() -> hero {
-            let a = Int(arc4random_uniform(2) + 1) // 2 pour s'assurer de ne pas tomber sur ce qui n'est pas encore integrer
+            let a = Int(arc4random_uniform(3) + 1) // 2 pour s'assurer de ne pas tomber sur ce qui n'est pas encore integrer
             switch a {
             case 1:
                 return hero.mage
@@ -211,10 +214,12 @@ class GameScene: SKScene {
                                 heroPosable = mageSpirituel()
                             case hero.demoniste:
                                 heroPosable = demoniste()
+                            case hero.moltanica:
+                                heroPosable = moltanica()
                             default:
                                 fatalError("attention aucune carte n'est posable -> selectioncarte.pier.contienthero = nul")
                             }
-                            
+                            self.addChild(heroPosable!)
                             
                            heroPosable!.info = heroInfo(colonne: ile.colonne, ranger: ile.ranger)
                            heroPosable?.position = CGPoint(x: ile.position.x, y: ile.position.y + 75)
