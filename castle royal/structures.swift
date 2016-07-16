@@ -85,7 +85,9 @@ class pierre: SKSpriteNode {
     
     var carte: SKSpriteNode? = nil
     var numero: Int = 0
+    var contientHero: hero? = nil
     init(carte: hero, numero: Int) {
+        self.contientHero = carte 
         super.init(texture: textures.pierre, color: UIColor.clearColor(), size: CGSize(width: information.ScreenWidth/6, height: information.ScreenWidth/6))
         switch carte {
         case .demoniste:

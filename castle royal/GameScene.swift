@@ -99,6 +99,10 @@ class GameScene: SKScene {
                let mage = superHero as! mageSpirituel
                mage.reflexion()
             }
+            if superHero is demoniste {
+               let demo = superHero as! demoniste
+               demo.reflexion()
+            }
             
         }
         
@@ -106,17 +110,8 @@ class GameScene: SKScene {
     
     func INITpierre() {
         
-        for i in 1...5 {
-            
-            let pier = pierre(carte: hero.mage, numero: i)
-            let info = collectionIlot[key(1, ranger: CGFloat(i))]
-            pier.position = CGPoint(x: (info?.ilotReferance.position.x)!, y: (info?.ilotReferance.position.y)! - 130)
-            self.addChild(pier)
-            self.boite_a_pierre.append(pier)
-        }
-        
         func randomCarte() -> hero {
-            let a = Int(arc4random_uniform(4) + 1)
+            let a = Int(arc4random_uniform(2) + 1) // 2 pour s'assurer de ne pas tomber sur ce qui n'est pas encore integrer
             switch a {
             case 1:
                 return hero.mage
@@ -130,6 +125,16 @@ class GameScene: SKScene {
                 return hero.mage
             }
         }
+        
+        for i in 1...5 {
+            
+            let pier = pierre(carte: randomCarte(), numero: i)
+            let info = collectionIlot[key(1, ranger: CGFloat(i))]
+            pier.position = CGPoint(x: (info?.ilotReferance.position.x)!, y: (info?.ilotReferance.position.y)! - 130)
+            self.addChild(pier)
+            self.boite_a_pierre.append(pier)
+        }
+        
         
     }
 
@@ -201,12 +206,19 @@ class GameScene: SKScene {
                         if heroPosable == nil && selectionCarte.pier.carte != nil {
                         
                             
-                           let mage = mageSpirituel()
-                           heroPosable = mage
-                           mage.info = heroInfo(colonne: ile.colonne, ranger: ile.ranger)
-                           heroPosable?.position = CGPoint(x: ile.position.x, y: ile.position.y + 75)
-                           self.addChild(mage)
+                            switch selectionCarte.pier.contientHero! {
+                            case hero.mage:
+                                heroPosable = mageSpirituel()
+                            case hero.demoniste:
+                                heroPosable = demoniste()
+                            default:
+                                fatalError("attention aucune carte n'est posable -> selectioncarte.pier.contienthero = nul")
+                            }
                             
+                            
+                           heroPosable!.info = heroInfo(colonne: ile.colonne, ranger: ile.ranger)
+                           heroPosable?.position = CGPoint(x: ile.position.x, y: ile.position.y + 75)
+                           
                            selectionCarte.ide = ile.ide 
                            selectionSpriteIlot.blendMode = SKBlendMode.Alpha
                            selectionCarte.ok = true
