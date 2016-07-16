@@ -11,13 +11,15 @@ import SpriteKit
 
 class heroSprite: SKSpriteNode {
     
-    var pv: Int = 100 {
+    var pv: Int = 500 {
         didSet {
             if pv <= 0 {
                 self.removeFromParent()
             }
         }
     }
+    
+    var degat: Int = 50
     
     var info: heroInfo! // set ou crash
     
@@ -53,10 +55,180 @@ class heroSprite: SKSpriteNode {
     private func vider() {
         if collectionIlot[self.key()]?.contient != ilotContient.deploiementAllier {
         collectionIlot[self.key()]?.contient = ilotContient.vide
+        collectionIlot[self.key()]?.hero = nil 
         }
     }
     private func remplir(key: CGFloat) {
         collectionIlot[key]?.contient = ilotContient.heroAllier
+        collectionIlot[key]?.hero = self
+    }
+    
+    private func projectile(heroType: hero, cible: ilotInfo) {
+        
+        func point() -> CGPoint {
+            
+            var randomX = CGFloat(arc4random_uniform(20) + 1)
+            var randomY = CGFloat(arc4random_uniform(20) + 1)
+            let un = arc4random_uniform(3)
+            switch un {
+            case 0:
+                randomX = -randomX
+            case 1:
+                randomY = -randomY
+            case 2:
+                randomY = -randomY
+                randomX = -randomX
+            default:
+                break
+            }
+            return CGPoint(x: cible.ilotReferance.position.x + randomX, y: cible.ilotReferance.position.y + randomY + 75)
+            
+        }
+    
+        let positionFinal = point()
+        if cible.building != nil && cible.hero != nil {
+            fatalError("erreur ! un ilot contiendrait a la fois un batiment et un hero ?")
+        } else if cible.building == nil && cible.hero == nil {
+            fatalError("erreur ! une attaque se produirait sur un ilot vide ?")
+        }
+        
+        
+        switch heroType {
+        case .mage:
+            let projectile = SKSpriteNode(texture: textures.anim_projectile_mage)
+            projectile.position = self.position
+            information.AnimationNode?.addChild(projectile)
+            projectile.size = CGSize(width: 40, height: 40)
+            projectile.runAction(SKAction.moveTo(positionFinal, duration: 0.6))
+            projectile.zPosition = self.zPosition - 1
+            let eclat = SKSpriteNode(texture: textures.anim_mage_bim[0])
+            eclat.zPosition = self.zPosition - 2
+            eclat.hidden = true
+            eclat.size = CGSize(width: 80, height: 80)
+            information.AnimationNode?.runAction(SKAction.sequence([
+                SKAction.waitForDuration(0.6),
+                SKAction.runBlock({
+                    projectile.removeFromParent()
+                    information.AnimationNode?.addChild(eclat)
+                    eclat.hidden = false
+                    eclat.position = positionFinal
+                    eclat.runAction(SKAction.animateWithTextures(textures.anim_mage_bim, timePerFrame: 0.05))
+                }),
+                SKAction.waitForDuration(0.4),
+                SKAction.runBlock({
+                    eclat.removeFromParent()
+                })
+                ]))
+        case .demoniste:
+            let projectile = SKSpriteNode(texture: textures.anim_projectile_flamme[0])
+            projectile.runAction(SKAction.animateWithTextures(textures.anim_projectile_flamme, timePerFrame: 0.1, resize: true, restore: false))
+            projectile.position = self.position
+            information.AnimationNode?.addChild(projectile)
+            projectile.size = CGSize(width: 80, height: 80)
+            projectile.runAction(SKAction.moveTo(positionFinal, duration: 0.6))
+            projectile.zPosition = self.zPosition - 1
+            projectile.position.y += 25
+            projectile.position.x += 10
+            let eclat = SKSpriteNode(texture: textures.anim_demo_bim[0])
+            eclat.zPosition = self.zPosition - 2
+            eclat.hidden = true
+            eclat.size = CGSize(width: 80, height: 80)
+            information.AnimationNode?.runAction(SKAction.sequence([
+                SKAction.waitForDuration(0.6),
+                SKAction.runBlock({
+                    projectile.removeFromParent()
+                    information.AnimationNode?.addChild(eclat)
+                    eclat.hidden = false
+                    eclat.position = positionFinal
+                    eclat.runAction(SKAction.animateWithTextures(textures.anim_demo_bim, timePerFrame: 0.1, resize: true, restore: false))
+                }),
+                SKAction.waitForDuration(0.5),
+                SKAction.runBlock({
+                    eclat.removeFromParent()
+                })
+                ]))
+        case .moltanica:
+            let projectile = SKSpriteNode(texture: textures.anim_projectile_flamme[0])
+            projectile.runAction(SKAction.animateWithTextures(textures.anim_projectile_flamme, timePerFrame: 0.1, resize: true, restore: false))
+            projectile.position = self.position
+            projectile.position.y += 20
+            information.AnimationNode?.addChild(projectile)
+            projectile.size = CGSize(width: 160, height: 160)
+            projectile.runAction(SKAction.moveTo(positionFinal, duration: 0.6))
+            projectile.zPosition = self.zPosition - 1
+            let eclat = SKSpriteNode(texture: textures.anim_demo_bim[0])
+            eclat.zPosition = self.zPosition - 2
+            eclat.hidden = true
+            eclat.size = CGSize(width: 80, height: 80)
+            information.AnimationNode?.runAction(SKAction.sequence([
+                SKAction.waitForDuration(0.6),
+                SKAction.runBlock({
+                    projectile.removeFromParent()
+                    information.AnimationNode?.addChild(eclat)
+                    eclat.position = positionFinal
+                    eclat.runAction(SKAction.animateWithTextures(textures.anim_moltanica_bim, timePerFrame: 0.1, resize: true, restore: false))
+                    eclat.hidden = false
+                }),
+                SKAction.waitForDuration(0.6),
+                SKAction.runBlock({
+                    eclat.removeFromParent()
+                })
+                ]))
+            
+        case .vlad:
+            let projectile = SKSpriteNode(texture: textures.anim_projectile_flamme[0])
+            projectile.runAction(SKAction.animateWithTextures(textures.anim_projectile_flamme, timePerFrame: 0.1))
+            projectile.position = self.position
+            projectile.position.y += 20
+            information.AnimationNode?.addChild(projectile)
+            projectile.size = CGSize(width: 120, height: 120)
+            projectile.runAction(SKAction.moveTo(positionFinal, duration: 0.6))
+            projectile.zPosition = self.zPosition - 1
+            let eclat = SKSpriteNode(texture: textures.anim_demo_bim[0])
+            eclat.zPosition = self.zPosition - 2
+            eclat.hidden = true
+            eclat.size = CGSize(width: 80, height: 80)
+            information.AnimationNode?.runAction(SKAction.sequence([
+                SKAction.waitForDuration(0.6),
+                SKAction.runBlock({
+                    projectile.removeFromParent()
+                    information.AnimationNode?.addChild(eclat)
+                    eclat.position = positionFinal
+                    eclat.runAction(SKAction.animateWithTextures(textures.anim_moltanica_bim, timePerFrame: 0.05))
+                    eclat.hidden = false
+                }),
+                SKAction.waitForDuration(0.4),
+                SKAction.runBlock({
+                    eclat.removeFromParent()
+                })
+                ]))
+        default:
+            break
+        }
+        
+        if let building = cible.building {
+            
+            
+            information.AnimationNode?.runAction(SKAction.sequence([
+                SKAction.waitForDuration(0.9),
+                SKAction.runBlock({
+                    building.pv -= self.degat
+                })
+                ]))
+            
+        }
+        if let heroCible = cible.hero {
+            
+            information.AnimationNode?.runAction(SKAction.sequence([
+                SKAction.waitForDuration(0.9),
+                SKAction.runBlock({
+                    heroCible.pv -= self.degat
+                })
+                ]))
+            
+        }
+        
+        
     }
     
     
@@ -219,20 +391,24 @@ class mageSpirituel: heroSprite {
         switch movement {
         case .bas(let b):
             self.devantATK()
+            self.projectile(hero.mage, cible: b)
         case .droit(let d):
             self.profilATK()
             if self.gauchiste == true {
                 self.xScale = self.xScale * -1
                 gauchiste = false
             }
+            self.projectile(hero.mage, cible: d)
         case .gauche(let g):
             self.profilATK()
             if self.gauchiste == false {
                 self.xScale = self.xScale * -1
                 gauchiste = true
             }
+            self.projectile(hero.mage, cible: g)
         case .haut(let h):
             self.derriereATK()
+            self.projectile(hero.mage, cible: h)
         }
         
     }
@@ -396,20 +572,24 @@ class demoniste: heroSprite { // demoniste
         switch movement {
         case .bas(let b):
             self.devantATK()
+            self.projectile(hero.demoniste, cible: b)
         case .droit(let d):
             self.profilATK()
             if self.gauchiste == true {
                 self.xScale = self.xScale * -1
                 gauchiste = false
             }
+            self.projectile(hero.demoniste, cible: d)
         case .gauche(let g):
             self.profilATK()
             if self.gauchiste == false {
                 self.xScale = self.xScale * -1
                 gauchiste = true
             }
+            self.projectile(hero.demoniste, cible: g)
         case .haut(let h):
             self.derriereATK()
+            self.projectile(hero.demoniste, cible: h)
         }
 
         
@@ -575,20 +755,24 @@ class moltanica: heroSprite { // moltanica
         switch movement {
         case .bas(let b):
             self.devantATK()
+            self.projectile(hero.moltanica, cible: b)
         case .droit(let d):
             self.profilATK()
             if self.gauchiste == true {
                 self.xScale = self.xScale * -1
                 gauchiste = false
             }
+            self.projectile(hero.moltanica, cible: d)
         case .gauche(let g):
             self.profilATK()
             if self.gauchiste == false {
                 self.xScale = self.xScale * -1
                 gauchiste = true
             }
+            self.projectile(hero.moltanica, cible: g)
         case .haut(let h):
             self.derriereATK()
+            self.projectile(hero.moltanica, cible: h)
         }
 
         
@@ -754,20 +938,24 @@ class vladDracula: heroSprite { // vlad dracula
         switch movement {
         case .bas(let b):
             self.devantATK()
+            self.projectile(hero.vlad, cible: b)
         case .droit(let d):
             self.profilATK()
             if self.gauchiste == true {
                 self.xScale = self.xScale * -1
                 gauchiste = false
             }
+            self.projectile(hero.vlad, cible: d)
         case .gauche(let g):
             self.profilATK()
             if self.gauchiste == false {
                 self.xScale = self.xScale * -1
                 gauchiste = true
             }
+            self.projectile(hero.vlad, cible: g)
         case .haut(let h):
             self.derriereATK()
+            self.projectile(hero.vlad, cible: h)
         }
         
     }
