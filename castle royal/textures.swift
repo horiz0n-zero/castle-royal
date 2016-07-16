@@ -24,6 +24,7 @@ struct textures {
     static let carteDemoniste = SKTexture(imageNamed: "item0290")
     static let carteMoltanica = SKTexture(imageNamed: "item0225")
     static let carteDuc = SKTexture(imageNamed: "item0213")
+    static let carteVlad = SKTexture(imageNamed: "item0266")
     
     // mage
     static let mage_devant = [
@@ -484,6 +485,171 @@ struct textures {
         SKTexture(imageNamed: "m118"),
         SKTexture(imageNamed: "m119"),
         SKTexture(imageNamed: "m120"),
+        ]
+    
+    
+    // vlad
+    //  dracula :
+    
+    static let vlad_devant_im = [
+        SKTexture(imageNamed: "v1"),
+        SKTexture(imageNamed: "v2"),
+        SKTexture(imageNamed: "v3"),
+        SKTexture(imageNamed: "v4"),
+        SKTexture(imageNamed: "v5"),
+        SKTexture(imageNamed: "v6"),
+        SKTexture(imageNamed: "v7"),
+        SKTexture(imageNamed: "v8")
+    ]
+    static let vlad_semi_devant_im = [
+        SKTexture(imageNamed: "v9"),
+        SKTexture(imageNamed: "10"),
+        SKTexture(imageNamed: "v11"),
+        SKTexture(imageNamed: "v12"),
+        SKTexture(imageNamed: "v13"),
+        SKTexture(imageNamed: "v14"),
+        SKTexture(imageNamed: "v15"),
+        SKTexture(imageNamed: "v16")
+    ]
+    static let vlad_profil_im = [
+        SKTexture(imageNamed: "v17"),
+        SKTexture(imageNamed: "v18"),
+        SKTexture(imageNamed: "v19"),
+        SKTexture(imageNamed: "v20"),
+        SKTexture(imageNamed: "v21"),
+        SKTexture(imageNamed: "v22"),
+        SKTexture(imageNamed: "v23"),
+        SKTexture(imageNamed: "v24")
+    ]
+    static let vlad_semi_derriere_im = [
+        SKTexture(imageNamed: "v25"),
+        SKTexture(imageNamed: "v26"),
+        SKTexture(imageNamed: "v27"),
+        SKTexture(imageNamed: "v28"),
+        SKTexture(imageNamed: "v29"),
+        SKTexture(imageNamed: "v30"),
+        SKTexture(imageNamed: "v31"),
+        SKTexture(imageNamed: "v32")
+        
+    ]
+    static let vlad_derriere_im = [
+        SKTexture(imageNamed: "v33"),
+        SKTexture(imageNamed: "v34"),
+        SKTexture(imageNamed: "v35"),
+        SKTexture(imageNamed: "v36"),
+        SKTexture(imageNamed: "v37"),
+        SKTexture(imageNamed: "v38"),
+        SKTexture(imageNamed: "v39"),
+        SKTexture(imageNamed: "v40")
+        
+    ]
+    // immobile
+    static let vlad_devant = [
+        SKTexture(imageNamed: "v41"),
+        SKTexture(imageNamed: "v42"),
+        SKTexture(imageNamed: "v43"),
+        SKTexture(imageNamed: "v44"),
+        SKTexture(imageNamed: "v45"),
+        SKTexture(imageNamed: "v46"),
+        SKTexture(imageNamed: "v47"),
+        SKTexture(imageNamed: "v48")
+        
+    ]
+    static let vlad_semi_devant = [
+        SKTexture(imageNamed: "v49"),
+        SKTexture(imageNamed: "v50"),
+        SKTexture(imageNamed: "v51"),
+        SKTexture(imageNamed: "v52"),
+        SKTexture(imageNamed: "v53"),
+        SKTexture(imageNamed: "v54"),
+        SKTexture(imageNamed: "v55"),
+        SKTexture(imageNamed: "v56")
+        
+    ]
+    static let vlad_profil = [
+        SKTexture(imageNamed: "v57"),
+        SKTexture(imageNamed: "v58"),
+        SKTexture(imageNamed: "v59"),
+        SKTexture(imageNamed: "v60"),
+        SKTexture(imageNamed: "v61"),
+        SKTexture(imageNamed: "v62"),
+        SKTexture(imageNamed: "v63"),
+        SKTexture(imageNamed: "v64")
+        
+    ]
+    static let vlad_semi_derriere = [
+        SKTexture(imageNamed: "v65"),
+        SKTexture(imageNamed: "v66"),
+        SKTexture(imageNamed: "v67"),
+        SKTexture(imageNamed: "v68"),
+        SKTexture(imageNamed: "v69"),
+        SKTexture(imageNamed: "v70"),
+        SKTexture(imageNamed: "v71"),
+        SKTexture(imageNamed: "v72")
+        
+    ]
+    static let vlad_derriere = [
+        SKTexture(imageNamed: "v73"),
+        SKTexture(imageNamed: "v74"),
+        SKTexture(imageNamed: "v75"),
+        SKTexture(imageNamed: "v76"),
+        SKTexture(imageNamed: "v77"),
+        SKTexture(imageNamed: "v78"),
+        SKTexture(imageNamed: "v79"),
+        SKTexture(imageNamed: "v80")
+        
+    ]
+    // attaque :
+    static let vlad_devant_atk = [
+        SKTexture(imageNamed: "v81"),
+        SKTexture(imageNamed: "v82"),
+        SKTexture(imageNamed: "v83"),
+        SKTexture(imageNamed: "v84"),
+        ]
+    static let vlad_semi_devant_atk = [
+        SKTexture(imageNamed: "v85"),
+        SKTexture(imageNamed: "v86"),
+        SKTexture(imageNamed: "v87"),
+        SKTexture(imageNamed: "v88"),
+        SKTexture(imageNamed: "v89"),
+        SKTexture(imageNamed: "v90"),
+        SKTexture(imageNamed: "v91"),
+        SKTexture(imageNamed: "v92")
+    ]
+    static let vlad_profil_atk = [
+        SKTexture(imageNamed: "v93"),
+        SKTexture(imageNamed: "v94"),
+        SKTexture(imageNamed: "v95"),
+        SKTexture(imageNamed: "v96"),
+        SKTexture(imageNamed: "v97"),
+        SKTexture(imageNamed: "v98"),
+        SKTexture(imageNamed: "v99"),
+        SKTexture(imageNamed: "v100")
+    ]
+    static let vlad_semi_derriere_atk = [
+        SKTexture(imageNamed: "v101"),
+        SKTexture(imageNamed: "v102"),
+        SKTexture(imageNamed: "v103"),
+        SKTexture(imageNamed: "v104"),
+        SKTexture(imageNamed: "v105"),
+        SKTexture(imageNamed: "v106"),
+        SKTexture(imageNamed: "v107"),
+        SKTexture(imageNamed: "v108")
+        
+    ]
+    static let vlad_derriere_atk = [
+        SKTexture(imageNamed: "v109"),
+        SKTexture(imageNamed: "v110"),
+        SKTexture(imageNamed: "v111"),
+        SKTexture(imageNamed: "v112"),
+        SKTexture(imageNamed: "v113"),
+        SKTexture(imageNamed: "v114"),
+        SKTexture(imageNamed: "v115"),
+        SKTexture(imageNamed: "v116"),
+        SKTexture(imageNamed: "v117"),
+        SKTexture(imageNamed: "v118"),
+        SKTexture(imageNamed: "v119"),
+        SKTexture(imageNamed: "v120"),
         ]
 
 }

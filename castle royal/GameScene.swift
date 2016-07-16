@@ -107,6 +107,10 @@ class GameScene: SKScene {
                 let molta = superHero as! moltanica
                 molta.reflexion()
             }
+            if superHero is vladDracula {
+                let vlad = superHero as! vladDracula
+                vlad.reflexion()
+            }
         }
         
     }
@@ -114,7 +118,7 @@ class GameScene: SKScene {
     func INITpierre() {
         
         func randomCarte() -> hero {
-            let a = Int(arc4random_uniform(3) + 1) // 2 pour s'assurer de ne pas tomber sur ce qui n'est pas encore integrer
+            let a = Int(arc4random_uniform(4) + 1) // n pour s'assurer de ne pas tomber sur ce qui n'est pas encore integrer
             switch a {
             case 1:
                 return hero.mage
@@ -123,7 +127,7 @@ class GameScene: SKScene {
             case 3:
                 return hero.moltanica
             case 4:
-                return hero.duc
+                return hero.vlad
             default:
                 return hero.mage
             }
@@ -216,8 +220,10 @@ class GameScene: SKScene {
                                 heroPosable = demoniste()
                             case hero.moltanica:
                                 heroPosable = moltanica()
+                            case hero.vlad:
+                                heroPosable = vladDracula()
                             default:
-                                fatalError("attention aucune carte n'est posable -> selectioncarte.pier.contienthero = nul")
+                                fatalError("attention aucune carte n'est posable -> selectioncarte.pier.contienthero = nul ou le hero n'est pas specifier")
                             }
                             self.addChild(heroPosable!)
                             

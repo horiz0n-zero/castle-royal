@@ -79,6 +79,7 @@ enum hero {
     case duc
     case demoniste
     case moltanica
+    case vlad
 }
 
 class pierre: SKSpriteNode {
@@ -98,6 +99,8 @@ class pierre: SKSpriteNode {
             self.carte = SKSpriteNode(texture: textures.carteMage)
         case .moltanica:
             self.carte = SKSpriteNode(texture: textures.carteMoltanica)
+        case .vlad:
+            self.carte = SKSpriteNode(texture: textures.carteVlad)
         }
         
         self.addChild(self.carte!)
