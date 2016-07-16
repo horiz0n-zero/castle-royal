@@ -99,19 +99,19 @@ class mageSpirituel: heroSprite {
         animer(textures.mage_profil_im)
     }
     func devantATK() {
-        animerNR(textures.mage_devant_atk)
+        animer(textures.mage_devant_atk)
     }
     func derriereATK() {
-        animerNR(textures.mage_derriere_atk)
+        animer(textures.mage_derriere_atk)
     }
     func profilATK() {
-        animerNR(textures.mage_profil_atk)
+        animer(textures.mage_profil_atk)
     }
     
     
     private func animer(textures: [SKTexture]) {
         self.removeActionForKey(action)
-        self.runAction(SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: 0.1)), withKey: action)
+        self.runAction(SKAction.animateWithTextures(textures, timePerFrame: 0.1), withKey: action)
     }
     private func animerNR(textures: [SKTexture]) {
         self.removeActionForKey(action)
@@ -215,7 +215,25 @@ class mageSpirituel: heroSprite {
     
     private func attaque(movement: mouvement) {
         
-        print("tai tai !!")
+        information.son_hero_attaque()
+        switch movement {
+        case .bas(let b):
+            self.devantATK()
+        case .droit(let d):
+            self.profilATK()
+            if self.gauchiste == true {
+                self.xScale = self.xScale * -1
+                gauchiste = false
+            }
+        case .gauche(let g):
+            self.profilATK()
+            if self.gauchiste == false {
+                self.xScale = self.xScale * -1
+                gauchiste = true
+            }
+        case .haut(let h):
+            self.derriereATK()
+        }
         
     }
     
@@ -259,19 +277,19 @@ class demoniste: heroSprite { // demoniste
         animer(textures.demo_profil_im)
     }
     func devantATK() {
-        animerNR(textures.demo_devant_atk)
+        animer(textures.demo_devant_atk)
     }
     func derriereATK() {
-        animerNR(textures.demo_derriere_atk)
+        animer(textures.demo_derriere_atk)
     }
     func profilATK() {
-        animerNR(textures.demo_profil_atk)
+        animer(textures.demo_profil_atk)
     }
     
     
     private func animer(textures: [SKTexture]) {
         self.removeActionForKey(action)
-        self.runAction(SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false)), withKey: action)
+        self.runAction(SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false), withKey: action)
     }
     private func animerNR(textures: [SKTexture]) {
         self.removeActionForKey(action)
@@ -374,8 +392,26 @@ class demoniste: heroSprite { // demoniste
     }
     
     private func attaque(movement: mouvement) {
-        
-        print("tai tai !!")
+        information.son_hero_attaque()
+        switch movement {
+        case .bas(let b):
+            self.devantATK()
+        case .droit(let d):
+            self.profilATK()
+            if self.gauchiste == true {
+                self.xScale = self.xScale * -1
+                gauchiste = false
+            }
+        case .gauche(let g):
+            self.profilATK()
+            if self.gauchiste == false {
+                self.xScale = self.xScale * -1
+                gauchiste = true
+            }
+        case .haut(let h):
+            self.derriereATK()
+        }
+
         
     }
     
@@ -419,19 +455,19 @@ class moltanica: heroSprite { // moltanica
         animer(textures.molta_profil_im)
     }
     func devantATK() {
-        animerNR(textures.molta_devant_atk)
+        animer(textures.molta_devant_atk)
     }
     func derriereATK() {
-        animerNR(textures.molta_derriere_atk)
+        animer(textures.molta_derriere_atk)
     }
     func profilATK() {
-        animerNR(textures.molta_profil_atk)
+        animer(textures.molta_profil_atk)
     }
     
     
     private func animer(textures: [SKTexture]) {
         self.removeActionForKey(action)
-        self.runAction(SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false)), withKey: action)
+        self.runAction(SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false), withKey: action)
     }
     private func animerNR(textures: [SKTexture]) {
         self.removeActionForKey(action)
@@ -535,7 +571,26 @@ class moltanica: heroSprite { // moltanica
     
     private func attaque(movement: mouvement) {
         
-        print("tai tai !!")
+        information.son_hero_attaque()
+        switch movement {
+        case .bas(let b):
+            self.devantATK()
+        case .droit(let d):
+            self.profilATK()
+            if self.gauchiste == true {
+                self.xScale = self.xScale * -1
+                gauchiste = false
+            }
+        case .gauche(let g):
+            self.profilATK()
+            if self.gauchiste == false {
+                self.xScale = self.xScale * -1
+                gauchiste = true
+            }
+        case .haut(let h):
+            self.derriereATK()
+        }
+
         
     }
     
@@ -580,19 +635,19 @@ class vladDracula: heroSprite { // vlad dracula
         animer(textures.vlad_profil_im)
     }
     func devantATK() {
-        animerNR(textures.vlad_devant_atk)
+        animer(textures.vlad_devant_atk)
     }
     func derriereATK() {
-        animerNR(textures.vlad_derriere_atk)
+        animer(textures.vlad_derriere_atk)
     }
     func profilATK() {
-        animerNR(textures.vlad_profil_atk)
+        animer(textures.vlad_profil_atk)
     }
     
     
     private func animer(textures: [SKTexture]) {
         self.removeActionForKey(action)
-        self.runAction(SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false)), withKey: action)
+        self.runAction(SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false), withKey: action)
     }
     private func animerNR(textures: [SKTexture]) {
         self.removeActionForKey(action)
@@ -695,8 +750,25 @@ class vladDracula: heroSprite { // vlad dracula
     }
     
     private func attaque(movement: mouvement) {
-        
-        print("tai tai !!")
+        information.son_hero_attaque()
+        switch movement {
+        case .bas(let b):
+            self.devantATK()
+        case .droit(let d):
+            self.profilATK()
+            if self.gauchiste == true {
+                self.xScale = self.xScale * -1
+                gauchiste = false
+            }
+        case .gauche(let g):
+            self.profilATK()
+            if self.gauchiste == false {
+                self.xScale = self.xScale * -1
+                gauchiste = true
+            }
+        case .haut(let h):
+            self.derriereATK()
+        }
         
     }
     

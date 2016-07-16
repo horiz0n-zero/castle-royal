@@ -72,6 +72,15 @@ class GameScene: SKScene {
                 collectionIlot[sprite.ide]?.contient = ilotContient.deploiementEnemie
             }
             
+            if i == 28 {
+               let bat = batiment(imageNamed: "zap")
+               bat.position = CGPointMake(0, 75)
+               sprite.addChild(bat)
+               bat.zPosition = sprite.zPosition + 1
+               collectionIlot[sprite.ide]?.contient = ilotContient.batiment
+               collectionIlot[sprite.ide]!.building = bat
+            }
+            
             let lab = SKLabelNode(text: "\(collectionIlot[sprite.ide]!.contient)")
             lab.fontColor = UIColor.blueColor()
             sprite.label = lab

@@ -28,6 +28,10 @@ struct InformationGeneral {
         
     }
     
+    func son_hero_attaque() {
+        self.AudioNode?.runAction(SKAction.playSoundFileNamed("hero_attack.mp3", waitForCompletion: false))
+    }
+    
 }
 
 // case 
@@ -54,7 +58,8 @@ struct ilotInfo {
     let ranger: CGFloat
     let ilotReferance: ilot
     var contient: ilotContient = .vide
-    var hero: heroSprite? = nil 
+    var hero: heroSprite? = nil
+    var building: batiment? = nil
     let position: CGPoint
     init(colonne: CGFloat, ranger: CGFloat, ilotReferance: ilot) {
         self.colonne = colonne
@@ -80,6 +85,16 @@ enum hero {
     case demoniste
     case moltanica
     case vlad
+}
+
+class batiment: SKSpriteNode {
+    var pv: Int = 1500 {
+        didSet {
+            if pv <= 0 {
+                self.removeFromParent()
+            }
+        }
+    }
 }
 
 class pierre: SKSpriteNode {

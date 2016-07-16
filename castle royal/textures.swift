@@ -617,7 +617,6 @@ struct textures {
         SKTexture(imageNamed: "v92")
     ]
     static let vlad_profil_atk = [
-        SKTexture(imageNamed: "v93"),
         SKTexture(imageNamed: "v94"),
         SKTexture(imageNamed: "v95"),
         SKTexture(imageNamed: "v96"),
@@ -638,7 +637,6 @@ struct textures {
         
     ]
     static let vlad_derriere_atk = [
-        SKTexture(imageNamed: "v109"),
         SKTexture(imageNamed: "v110"),
         SKTexture(imageNamed: "v111"),
         SKTexture(imageNamed: "v112"),
