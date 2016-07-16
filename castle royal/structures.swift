@@ -32,8 +32,6 @@ struct InformationGeneral {
 
 // case 
 
-
-
 enum ilotContient: UInt8 {
     case vide = 1
     case batiment = 2

@@ -16,9 +16,9 @@
 		88E54D851D39224B007443E7 /* textures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E54D841D39224B007443E7 /* textures.swift */; };
 		88E54D871D392286007443E7 /* constantes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E54D861D392286007443E7 /* constantes.swift */; };
 		88E54D891D39229B007443E7 /* structures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E54D881D39229B007443E7 /* structures.swift */; };
-		88E54D8B1D393D6C007443E7 /* select.caf in Resources */ = {isa = PBXBuildFile; fileRef = 88E54D8A1D393D6C007443E7 /* select.caf */; };
-		88E54D8D1D393EC1007443E7 /* select_ok.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88E54D8C1D393EC1007443E7 /* select_ok.mp3 */; };
 		88E54D8F1D394707007443E7 /* hero.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E54D8E1D394707007443E7 /* hero.swift */; };
+		88EEB57F1D3A5E6100709429 /* select.caf in Resources */ = {isa = PBXBuildFile; fileRef = 88E54D8A1D393D6C007443E7 /* select.caf */; };
+		88EEB5801D3A5E6800709429 /* select_ok.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88E54D8C1D393EC1007443E7 /* select_ok.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -146,9 +146,9 @@
 			files = (
 				88E54D7D1D3921B0007443E7 /* LaunchScreen.storyboard in Resources */,
 				88E54D7A1D3921B0007443E7 /* Assets.xcassets in Resources */,
-				88E54D8D1D393EC1007443E7 /* select_ok.mp3 in Resources */,
-				88E54D8B1D393D6C007443E7 /* select.caf in Resources */,
 				88E54D781D3921B0007443E7 /* Main.storyboard in Resources */,
+				88EEB57F1D3A5E6100709429 /* select.caf in Resources */,
+				88EEB5801D3A5E6800709429 /* select_ok.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

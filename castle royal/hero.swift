@@ -58,6 +58,8 @@ class heroSprite: SKSpriteNode {
     private func remplir(key: CGFloat) {
         collectionIlot[key]?.contient = ilotContient.heroAllier
     }
+    
+    
 }
 
 class mageSpirituel: heroSprite {

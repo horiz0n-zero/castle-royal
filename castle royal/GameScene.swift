@@ -191,7 +191,6 @@ class GameScene: SKScene {
                 
                 for child in IlotNode.children {
                     
-                    
                     if child.containsPoint(CGPoint(x: location.x, y: location.y - 75)) {
                         
                         let ile = child as! ilot

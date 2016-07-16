@@ -161,7 +161,6 @@ struct textures {
     ]
     // todo deministe
     
-    static let demo_devant: SKTexture? = nil 
     
     
 }
