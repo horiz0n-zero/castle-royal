@@ -31,6 +31,12 @@ struct InformationGeneral {
     func son_hero_attaque() {
         self.AudioNode?.runAction(SKAction.playSoundFileNamed("hero_attack.mp3", waitForCompletion: false))
     }
+    func son_batiment_detruit() {
+        self.AudioNode?.runAction(SKAction.playSoundFileNamed("buildingEx.mp3", waitForCompletion: false))
+    }
+    func son_vlad_explo() {
+        self.AudioNode?.runAction(SKAction.playSoundFileNamed("vladBim.mp3", waitForCompletion: false))
+    }
     
 }
 
@@ -49,7 +55,7 @@ class ilot: SKSpriteNode {
     var ide: CGFloat!
     var colonne: CGFloat!
     var ranger: CGFloat!
-    var label: SKLabelNode!
+    
 }
 
 struct ilotInfo {
@@ -88,12 +94,45 @@ enum hero {
 }
 
 class batiment: SKSpriteNode {
-    var pv: Int = 1500 {
+    var ide: CGFloat = 0.0
+    let label = SKLabelNode(text: "4500/4500")
+    var pv: Int = 4500 {
         didSet {
             if pv <= 0 {
+                collectionIlot[self.ide]!.contient = ilotContient.vide
+                collectionIlot[self.ide]!.building = nil
+                information.son_batiment_detruit()
                 self.removeFromParent()
+            } else {
+                
+                
+                switch self.pv {
+                case 0...1000:
+                    label.fontColor = UIColor.redColor()
+                case 1000...3000:
+                    label.fontColor = UIColor.orangeColor()
+                case 3000...4500:
+                    label.fontColor = UIColor.greenColor()
+                default:
+                    break
+                }
+                self.label.text = "\(self.pv)/4500"
+                self.label.alpha = 1.0
+                self.label.runAction(SKAction.sequence([
+                    SKAction.waitForDuration(0.2),
+                    SKAction.fadeAlphaTo(0.0, duration: 0.5),
+                    ]))
+                
             }
         }
+    }
+    
+    func parametrerLabel() {
+        self.addChild(label)
+        self.label.alpha = 0.0
+        label.fontSize = 32
+        label.position.y = 50
+        label.zPosition = 300
     }
 }
 

@@ -176,15 +176,16 @@ class heroSprite: SKSpriteNode {
                 ]))
             
         case .vlad:
-            let projectile = SKSpriteNode(texture: textures.anim_projectile_flamme[0])
-            projectile.runAction(SKAction.animateWithTextures(textures.anim_projectile_flamme, timePerFrame: 0.1))
+            let projectile = SKSpriteNode(texture: textures.anim_vlad_projectile)
             projectile.position = self.position
             projectile.position.y += 20
+            projectile.runAction(SKAction.rotateToAngle(CGFloat(M_PI*10), duration: 1))
+            projectile.size = CGSize(width: 50, height: 50)
+            projectile.alpha = 0.9
             information.AnimationNode?.addChild(projectile)
-            projectile.size = CGSize(width: 120, height: 120)
             projectile.runAction(SKAction.moveTo(positionFinal, duration: 0.6))
             projectile.zPosition = self.zPosition - 1
-            let eclat = SKSpriteNode(texture: textures.anim_demo_bim[0])
+            let eclat = SKSpriteNode(texture: textures.anim_vladBim[0])
             eclat.zPosition = self.zPosition - 2
             eclat.hidden = true
             eclat.size = CGSize(width: 80, height: 80)
@@ -194,10 +195,11 @@ class heroSprite: SKSpriteNode {
                     projectile.removeFromParent()
                     information.AnimationNode?.addChild(eclat)
                     eclat.position = positionFinal
-                    eclat.runAction(SKAction.animateWithTextures(textures.anim_moltanica_bim, timePerFrame: 0.05))
+                    eclat.runAction(SKAction.animateWithTextures(textures.anim_vladBim, timePerFrame: 0.05, resize: true, restore: false))
+                    information.son_vlad_explo()
                     eclat.hidden = false
                 }),
-                SKAction.waitForDuration(0.4),
+                SKAction.waitForDuration(0.3),
                 SKAction.runBlock({
                     eclat.removeFromParent()
                 })
@@ -237,6 +239,7 @@ class heroSprite: SKSpriteNode {
 class mageSpirituel: heroSprite {
     
     
+    
     let action: String
     var gauchiste: Bool = true
     init() {
@@ -244,6 +247,8 @@ class mageSpirituel: heroSprite {
         super.init(texture: textures.mage_devant[0], color: UIColor.cyanColor(), size: CGSize(width: information.solwidth/3, height: information.solwidth/3))
         self.zPosition = 200
         self.devant()
+        self.pv = 250
+        self.degat = 550
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -426,6 +431,8 @@ class demoniste: heroSprite { // demoniste
         super.init(texture: textures.mage_devant[0], color: UIColor.cyanColor(), size: CGSize(width: information.solwidth/2, height: information.solwidth*0.65))
         self.zPosition = 200
         self.devantIMMO()
+        self.pv = 750
+        self.degat = 175
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -608,6 +615,8 @@ class moltanica: heroSprite { // moltanica
         super.init(texture: textures.molta_devant[0], color: UIColor.cyanColor(), size: CGSize(width: information.solwidth*1.1, height: information.solwidth*0.8))
         self.zPosition = 200
         self.devant()
+        self.pv = 1700
+        self.degat = 150
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -792,6 +801,8 @@ class vladDracula: heroSprite { // vlad dracula
         super.init(texture: textures.vlad_devant[0], color: UIColor.cyanColor(), size: CGSize(width: information.solwidth, height: information.solwidth*0.7))
         self.zPosition = 200
         self.devant()
+        self.pv = 950
+        self.degat = 325
     }
     
     required init?(coder aDecoder: NSCoder) {

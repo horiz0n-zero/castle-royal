@@ -72,19 +72,18 @@ class GameScene: SKScene {
                 collectionIlot[sprite.ide]?.contient = ilotContient.deploiementEnemie
             }
             
-            if i == 28 {
+            if i == 28 || i == 8 || i == 10 {
                let bat = batiment(imageNamed: "zap")
                bat.position = CGPointMake(0, 75)
                sprite.addChild(bat)
                bat.zPosition = sprite.zPosition + 1
+               bat.ide = sprite.ide 
                collectionIlot[sprite.ide]?.contient = ilotContient.batiment
                collectionIlot[sprite.ide]!.building = bat
+               bat.parametrerLabel()
             }
             
-            let lab = SKLabelNode(text: "\(collectionIlot[sprite.ide]!.contient)")
-            lab.fontColor = UIColor.blueColor()
-            sprite.label = lab
-            sprite.addChild(lab)
+            
             
         }
         // fin ilot 
@@ -144,7 +143,7 @@ class GameScene: SKScene {
         
         for i in 1...5 {
             
-            let pier = pierre(carte: randomCarte(), numero: i)
+            let pier = pierre(carte: randomCarte(), numero: i) 
             let info = collectionIlot[key(1, ranger: CGFloat(i))]
             pier.position = CGPoint(x: (info?.ilotReferance.position.x)!, y: (info?.ilotReferance.position.y)! - 130)
             self.addChild(pier)
@@ -308,17 +307,7 @@ class GameScene: SKScene {
         
     }
     
-    override func update(currentTime: NSTimeInterval) {
-        for node in IlotNode.children {
-            
-            if node is ilot {
-               let ile = node as! ilot
-               ile.label.text = "\(collectionIlot[ile.ide]!.contient)"
-            }
-            
-        }
-    }
-
+   
 }
 
 

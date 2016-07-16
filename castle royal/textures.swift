@@ -67,8 +67,15 @@ struct textures {
     SKTexture(imageNamed: "moltaBim6")
     ]
     
-    static let anim_vladBim = SKTexture(imageNamed: "vladEclat")
-    static let anim_vlad_projectile = SKTexture(imageNamed: "vladProjectile")
+    static let anim_vladBim = [
+    SKTexture(imageNamed: "vladBim1"),
+    SKTexture(imageNamed: "vladBim2"),
+    SKTexture(imageNamed: "vladBim3"),
+    SKTexture(imageNamed: "vladBim4"),
+    SKTexture(imageNamed: "vladBim5"),
+    SKTexture(imageNamed: "vladBim6")
+    ]
+    static let anim_vlad_projectile = SKTexture(imageNamed: "vladEclat")
 
     
     // mage
