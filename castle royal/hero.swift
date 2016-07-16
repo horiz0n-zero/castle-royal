@@ -182,7 +182,7 @@ class mageSpirituel: heroSprite {
         func deplacer(point: CGPoint, textures: [SKTexture]) {
             let pointReel = CGPoint(x: point.x, y: point.y + 75)
             self.runAction(SKAction.group([
-                SKAction.animateWithTextures(textures, timePerFrame: NSTimeInterval(textures.count/1)),
+                SKAction.animateWithTextures(textures, timePerFrame: 0.1),
                 SKAction.moveTo(pointReel, duration: 1)
                 ]))
             

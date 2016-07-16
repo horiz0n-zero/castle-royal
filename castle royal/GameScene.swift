@@ -48,10 +48,9 @@ class GameScene: SKScene {
             
             let sprite = ilot(texture: textures.zone) // colonne et ranger de l'ilot utiliser dans touch
             sprite.colonne = colonne
-            sprite.ranger = ranger
             sprite.zPosition = 40 - CGFloat(i)
-            
             ranger += 1
+            sprite.ranger = ranger
             if ranger > 5 {
                 ranger = 1
                 colonne += 1
@@ -223,6 +222,7 @@ class GameScene: SKScene {
                             selectionCarte.ok = false
                         }
                         selectionCarte.heroVisible = true
+                        
                     }
                     
                 }
