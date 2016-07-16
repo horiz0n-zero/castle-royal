@@ -95,8 +95,8 @@ enum hero {
 
 class batiment: SKSpriteNode {
     var ide: CGFloat = 0.0
-    let label = SKLabelNode(text: "4500/4500")
-    var pv: Int = 4500 {
+    let label = SKLabelNode(text: "4500")
+    var pv: Int = 12000 {
         didSet {
             if pv <= 0 {
                 collectionIlot[self.ide]!.contient = ilotContient.vide
@@ -107,16 +107,14 @@ class batiment: SKSpriteNode {
                 
                 
                 switch self.pv {
-                case 0...1000:
+                case 0...3000:
                     label.fontColor = UIColor.redColor()
-                case 1000...3000:
+                case 3000...8000:
                     label.fontColor = UIColor.orangeColor()
-                case 3000...4500:
-                    label.fontColor = UIColor.greenColor()
                 default:
-                    break
+                    label.fontColor = UIColor.greenColor()
                 }
-                self.label.text = "\(self.pv)/4500"
+                self.label.text = "\(self.pv)"
                 self.label.alpha = 1.0
                 self.label.runAction(SKAction.sequence([
                     SKAction.waitForDuration(0.2),
@@ -133,6 +131,7 @@ class batiment: SKSpriteNode {
         label.fontSize = 32
         label.position.y = 50
         label.zPosition = 300
+        self.label.fontName = "Baby-blocks"
     }
 }
 

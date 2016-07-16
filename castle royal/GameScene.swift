@@ -97,6 +97,7 @@ class GameScene: SKScene {
             })
             ])))
         
+        
     }
     
     func tour() {

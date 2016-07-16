@@ -22,6 +22,7 @@
 		88EEB5821D3A85EA00709429 /* hero_attack.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88EEB5811D3A85EA00709429 /* hero_attack.mp3 */; };
 		88EEB5841D3ACE4900709429 /* buildingEx.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88EEB5831D3ACE4900709429 /* buildingEx.mp3 */; };
 		88EEB5861D3AD36200709429 /* vladBim.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88EEB5851D3AD36200709429 /* vladBim.mp3 */; };
+		88EEB5881D3AD96D00709429 /* baby blocks.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88EEB5871D3AD96D00709429 /* baby blocks.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		88EEB5811D3A85EA00709429 /* hero_attack.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = hero_attack.mp3; sourceTree = "<group>"; };
 		88EEB5831D3ACE4900709429 /* buildingEx.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = buildingEx.mp3; sourceTree = "<group>"; };
 		88EEB5851D3AD36200709429 /* vladBim.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = vladBim.mp3; sourceTree = "<group>"; };
+		88EEB5871D3AD96D00709429 /* baby blocks.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "baby blocks.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				88EEB5811D3A85EA00709429 /* hero_attack.mp3 */,
 				88EEB5831D3ACE4900709429 /* buildingEx.mp3 */,
 				88EEB5851D3AD36200709429 /* vladBim.mp3 */,
+				88EEB5871D3AD96D00709429 /* baby blocks.ttf */,
 				88E54D6D1D3921B0007443E7 /* castle royal */,
 				88E54D6C1D3921B0007443E7 /* Products */,
 			);
@@ -157,6 +160,7 @@
 				88E54D7D1D3921B0007443E7 /* LaunchScreen.storyboard in Resources */,
 				88EEB5821D3A85EA00709429 /* hero_attack.mp3 in Resources */,
 				88E54D7A1D3921B0007443E7 /* Assets.xcassets in Resources */,
+				88EEB5881D3AD96D00709429 /* baby blocks.ttf in Resources */,
 				88E54D781D3921B0007443E7 /* Main.storyboard in Resources */,
 				88EEB57F1D3A5E6100709429 /* select.caf in Resources */,
 				88EEB5861D3AD36200709429 /* vladBim.mp3 in Resources */,
