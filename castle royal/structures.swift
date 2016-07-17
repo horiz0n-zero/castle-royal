@@ -56,6 +56,7 @@ class ilot: SKSpriteNode {
     var colonne: CGFloat!
     var ranger: CGFloat!
     
+    var label: SKLabelNode! // @@
 }
 
 struct ilotInfo {
@@ -181,7 +182,9 @@ struct selection {
     
 }
 
-
+class SKSuperLabelNode: SKLabelNode {
+    var pvOriginel: Int = 0
+}
 
 
 

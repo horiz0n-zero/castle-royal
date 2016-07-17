@@ -22,7 +22,7 @@ class GameScene: SKScene {
     let selectionSpriteIlot = SKSpriteNode(texture: textures.zone_select)
     var heroPosable: heroSprite? = nil
     
-    var collectionHero = [heroSprite]()
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError()
@@ -72,7 +72,7 @@ class GameScene: SKScene {
                 collectionIlot[sprite.ide]?.contient = ilotContient.deploiementEnemie
             }
             
-            if i == 28 || i == 8 || i == 10 {
+            if i == 28 {
                let bat = batiment(imageNamed: "zap")
                bat.position = CGPointMake(0, 75)
                sprite.addChild(bat)
@@ -83,7 +83,11 @@ class GameScene: SKScene {
                bat.parametrerLabel()
             }
             
-            
+            let label = SKLabelNode(fontNamed: "SegoePrint-Bold")
+            sprite.addChild(label)
+            sprite.label = label
+            label.fontSize = 12
+            label.text = "\(collectionIlot[sprite.ide]!.contient)"
             
         }
         // fin ilot 
@@ -94,23 +98,57 @@ class GameScene: SKScene {
             SKAction.waitForDuration(1),
             SKAction.runBlock({
                 self.tour()
+                
             })
             ])))
+        self.popEnemie(self.randomCarte(), colonne: 7, ranger: 1)
+        self.popEnemie(self.randomCarte(), colonne: 7, ranger: 2)
+        self.popEnemie(self.randomCarte(), colonne: 7, ranger: 4)
+        self.popEnemie(self.randomCarte(), colonne: 7, ranger: 5)
         
         
     }
     
+    func popEnemie(type: hero, colonne: CGFloat, ranger: CGFloat) { // restriction case deploiement !
+        
+        if let ilot = collectionIlot[key(colonne, ranger: ranger)] {
+            
+            if ilot.contient == ilotContient.deploiementEnemie && ilot.hero == nil {
+                var heroe: heroSprite!
+                switch type {
+                case hero.mage:
+                    heroe = mageSpirituel()
+                case hero.demoniste:
+                    heroe = demoniste()
+                case hero.moltanica:
+                    heroe = moltanica()
+                case hero.vlad:
+                    heroe = vladDracula()
+                default:
+                    fatalError("attention aucune carte n'est posable -> selectioncarte.pier.contienthero = nul ou le hero n'est pas specifier")
+                }
+                heroe.allier = false
+                heroe.position = CGPoint(x: ilot.position.x, y: ilot.position.y + 150)
+                heroe.name = "hero"
+                heroe.info = heroInfo(colonne: colonne, ranger: ranger)
+                self.addChild(heroe)
+               
+            }
+            
+        }
+    }
+    
     func tour() {
-       
-        for superHero in collectionHero {
+        
+        self.enumerateChildNodesWithName("hero", usingBlock: { (superHero, _) in
             
             if superHero is mageSpirituel {
-               let mage = superHero as! mageSpirituel
-               mage.reflexion()
+                let mage = superHero as! mageSpirituel
+                mage.reflexion()
             }
             if superHero is demoniste {
-               let demo = superHero as! demoniste
-               demo.reflexion()
+                let demo = superHero as! demoniste
+                demo.reflexion()
             }
             if superHero is moltanica {
                 let molta = superHero as! moltanica
@@ -120,31 +158,37 @@ class GameScene: SKScene {
                 let vlad = superHero as! vladDracula
                 vlad.reflexion()
             }
-        }
+            
+        })
+            
+        
+        
         
     }
     
+    func randomCarte() -> hero {
+        let a = Int(arc4random_uniform(4) + 1) // n pour s'assurer de ne pas tomber sur ce qui n'est pas encore integrer
+        switch a {
+        case 1:
+            return hero.mage
+        case 2:
+            return hero.demoniste
+        case 3:
+            return hero.moltanica
+        case 4:
+            return hero.vlad
+        default:
+            return hero.mage
+        }
+    }
+
+    
     func INITpierre() {
         
-        func randomCarte() -> hero {
-            let a = Int(arc4random_uniform(4) + 1) // n pour s'assurer de ne pas tomber sur ce qui n'est pas encore integrer
-            switch a {
-            case 1:
-                return hero.mage
-            case 2:
-                return hero.demoniste
-            case 3:
-                return hero.moltanica
-            case 4:
-                return hero.vlad
-            default:
-                return hero.mage
-            }
-        }
         
         for i in 1...5 {
             
-            let pier = pierre(carte: randomCarte(), numero: i) 
+            let pier = pierre(carte: self.randomCarte(), numero: i)
             let info = collectionIlot[key(1, ranger: CGFloat(i))]
             pier.position = CGPoint(x: (info?.ilotReferance.position.x)!, y: (info?.ilotReferance.position.y)! - 130)
             self.addChild(pier)
@@ -243,7 +287,7 @@ class GameScene: SKScene {
                            selectionSpriteIlot.blendMode = SKBlendMode.Alpha
                            selectionCarte.ok = true
                             
-                        } else if collectionIlot[ile.ide]?.contient == ilotContient.deploiementAllier {
+                        } else if collectionIlot[ile.ide]?.contient == ilotContient.deploiementAllier && collectionIlot[ile.ide]!.hero == nil {
                             heroPosable?.position = CGPoint(x: ile.position.x, y: ile.position.y + 75)
                             heroPosable?.info = heroInfo(colonne: ile.colonne, ranger: ile.ranger)
                             selectionSpriteIlot.blendMode = SKBlendMode.Alpha
@@ -273,8 +317,8 @@ class GameScene: SKScene {
             if let copy = heroPosable {
                self.heroPosable?.removeFromParent()
                self.heroPosable = nil
+               copy.name = "hero"
                self.addChild(copy)
-               self.collectionHero.append(copy)
                selectionCarte.select = false
                selectionSprite.hidden = true
                 
@@ -308,6 +352,14 @@ class GameScene: SKScene {
         
     }
     
+    override func update(currentTime: NSTimeInterval) {
+        for ilo in IlotNode.children {
+            if ilo is ilot {
+                let ile = ilo as! ilot
+                ile.label.text = "\(collectionIlot[ile.ide]!.contient)"
+            }
+        }
+    }
    
 }
 

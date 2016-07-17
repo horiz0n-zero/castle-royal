@@ -14,4 +14,7 @@ var information: InformationGeneral!
 
 var collectionIlot = [CGFloat: ilotInfo]()
 
+
+
+
 // constantes 

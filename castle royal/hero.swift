@@ -11,17 +11,67 @@ import SpriteKit
 
 class heroSprite: SKSpriteNode {
     
+    deinit { }
+    
+    
     var pv: Int = 500 {
         didSet {
             if pv <= 0 {
+                if collectionIlot[self.key()]?.contient != ilotContient.deploiementAllier && collectionIlot[self.key()]?.contient != ilotContient.deploiementEnemie {
+                    collectionIlot[self.key()]?.contient = ilotContient.vide
+                    collectionIlot[self.key()]?.hero = nil
+                }
+                
+    
                 self.removeFromParent()
+                
+                
+            } else {
+                switch self.pv {
+                case 0...Int(self.label.pvOriginel/4):
+                    label.fontColor = UIColor.redColor()
+                case Int(self.label.pvOriginel/4)...Int(self.label.pvOriginel/2):
+                    label.fontColor = UIColor.orangeColor()
+                default:
+                    label.fontColor = UIColor.greenColor()
+                }
+                self.label.text = "\(self.pv)"
+                self.label.alpha = 1.0
+                self.label.runAction(SKAction.sequence([
+                    SKAction.waitForDuration(0.2),
+                    SKAction.fadeAlphaTo(0.0, duration: 0.5),
+                    ]))
             }
         }
     }
     
+    var allier: Bool = true {
+        didSet {
+            if self.allier {
+                self.TypeInverse = ilotContient.heroEnemie
+            } else {
+                self.TypeInverse = ilotContient.heroAllier
+            }
+        }
+    }
+    var TypeInverse: ilotContient = ilotContient.heroEnemie
     var degat: Int = 50
     
     var info: heroInfo! // set ou crash
+    
+    let label = SKSuperLabelNode(fontNamed: "SegoePrint-Bold")
+    
+    private func initLabel() {
+        
+        self.label.fontColor = UIColor.greenColor()
+        self.label.fontSize = 32
+        self.label.text = nil
+        self.label.position.y += 30
+        self.label.pvOriginel = self.pv
+        self.addChild(label)
+        
+        
+    }
     
     private enum mouvement {
         case haut(ilotInfo)
@@ -38,28 +88,57 @@ class heroSprite: SKSpriteNode {
     }
     private func avancerColonne() {
         self.info.colonne += 1
+        if self.allier {
         collectionIlot[self.key()]?.contient = ilotContient.heroAllier
+        } else {
+        collectionIlot[self.key()]?.contient = ilotContient.heroEnemie
+        }
+        collectionIlot[self.key()]?.hero = self
     }
     private func reculerColonne() {
         self.info.colonne -= 1
-        collectionIlot[self.key()]?.contient = ilotContient.heroAllier
+        if self.allier {
+            collectionIlot[self.key()]?.contient = ilotContient.heroAllier
+        } else {
+            collectionIlot[self.key()]?.contient = ilotContient.heroEnemie
+        }
+        collectionIlot[self.key()]?.hero = self
     }
     private func avancerRanger() {
         self.info.ranger += 1
-        collectionIlot[self.key()]?.contient = ilotContient.heroAllier
+        if self.allier {
+            collectionIlot[self.key()]?.contient = ilotContient.heroAllier
+        } else {
+            collectionIlot[self.key()]?.contient = ilotContient.heroEnemie
+        }
+        collectionIlot[self.key()]?.hero = self
     }
     private func reculerRanger() {
         self.info.ranger -= 1
-        collectionIlot[self.key()]?.contient = ilotContient.heroAllier
+        if self.allier {
+            collectionIlot[self.key()]?.contient = ilotContient.heroAllier
+        } else {
+            collectionIlot[self.key()]?.contient = ilotContient.heroEnemie
+        }
+        collectionIlot[self.key()]?.hero = self
     }
     private func vider() {
-        if collectionIlot[self.key()]?.contient != ilotContient.deploiementAllier {
+        if collectionIlot[self.key()]?.contient != ilotContient.deploiementAllier && collectionIlot[self.key()]?.contient != ilotContient.deploiementEnemie {
         collectionIlot[self.key()]?.contient = ilotContient.vide
         collectionIlot[self.key()]?.hero = nil 
         }
+        collectionIlot[self.key()]?.hero = self
+        if collectionIlot[self.key()]?.contient == ilotContient.deploiementAllier || collectionIlot[self.key()]?.contient == ilotContient.deploiementEnemie && collectionIlot[self.key()]?.hero != nil {
+            collectionIlot[self.key()]?.hero = nil
+        }
+        
     }
     private func remplir(key: CGFloat) {
+        if self.allier {
         collectionIlot[key]?.contient = ilotContient.heroAllier
+        } else {
+        collectionIlot[key]?.contient = ilotContient.heroEnemie
+        }
         collectionIlot[key]?.hero = self
     }
     
@@ -246,9 +325,10 @@ class mageSpirituel: heroSprite {
         action = String(NSUUID.init())
         super.init(texture: textures.mage_devant[0], color: UIColor.cyanColor(), size: CGSize(width: information.solwidth/3, height: information.solwidth/3))
         self.zPosition = 200
-        self.devant()
+        self.devantIMMO()
         self.pv = 250
         self.degat = 550
+        self.initLabel()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -267,13 +347,13 @@ class mageSpirituel: heroSprite {
         animer(textures.mage_profil)
     }
     func devantIMMO() {
-        animer(textures.mage_devant_im)
+        animerNR(textures.mage_devant_im)
     }
     func derriereIMMO() {
-        animer(textures.mage_derriere_im)
+        animerNR(textures.mage_derriere_im)
     }
     func profilIMMO() {
-        animer(textures.mage_profil_im)
+        animerNR(textures.mage_profil_im)
     }
     func devantATK() {
         animer(textures.mage_devant_atk)
@@ -292,7 +372,7 @@ class mageSpirituel: heroSprite {
     }
     private func animerNR(textures: [SKTexture]) {
         self.removeActionForKey(action)
-        self.runAction(SKAction.animateWithTextures(textures, timePerFrame: 0.1), withKey: action)
+        self.runAction(SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: 0.1)), withKey: action)
     }
 
     
@@ -309,37 +389,53 @@ class mageSpirituel: heroSprite {
         if let h = collectionIlot[haut] {
             if h.contient == ilotContient.vide {
            mouvements.append(mouvement.haut(h))
-            } else if h.contient == ilotContient.batiment || h.contient == ilotContient.heroEnemie {
+            } else if h.contient == ilotContient.batiment || h.contient == self.TypeInverse {
            self.attaque(mouvement.haut(h))
                 attaque = true
                 return
+            } else {
+               self.derriereIMMO()
             }
         }
         if let b = collectionIlot[bas] {
             if b.contient == ilotContient.vide {
            mouvements.append(mouvement.bas(b))
-            } else if b.contient == ilotContient.batiment || b.contient == ilotContient.heroEnemie {
+            } else if b.contient == ilotContient.batiment || b.contient == self.TypeInverse {
            self.attaque(mouvement.bas(b))
                 attaque = true
                 return
+            } else {
+                self.devantIMMO()
             }
         }
         if let g = collectionIlot[gauche] {
             if g.contient == ilotContient.vide {
            mouvements.append(mouvement.gauche(g))
-            } else if g.contient == ilotContient.batiment || g.contient == ilotContient.heroEnemie {
+            } else if g.contient == ilotContient.batiment || g.contient == self.TypeInverse {
            self.attaque(mouvement.gauche(g))
                 attaque = true
                 return
+            } else {
+                if self.gauchiste == false {
+                    self.xScale = self.xScale * -1
+                    gauchiste = true
+                }
+                self.profilIMMO()
             }
         }
         if let d = collectionIlot[droit] {
             if d.contient == ilotContient.vide {
            mouvements.append(mouvement.droit(d))
-            } else if d.contient == ilotContient.batiment || d.contient == ilotContient.heroEnemie {
+            } else if d.contient == ilotContient.batiment || d.contient == self.TypeInverse {
            self.attaque(mouvement.droit(d))
                 attaque = true
                 return
+            } else {
+                if self.gauchiste == true {
+                    self.xScale = self.xScale * -1
+                    gauchiste = false
+                }
+                self.profilIMMO()
             }
         }
         
@@ -433,6 +529,8 @@ class demoniste: heroSprite { // demoniste
         self.devantIMMO()
         self.pv = 750
         self.degat = 175
+        self.initLabel()
+      
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -451,13 +549,13 @@ class demoniste: heroSprite { // demoniste
         animer(textures.demo_profil)
     }
     func devantIMMO() {
-        animer(textures.demo_devant_im)
+        animerNR(textures.demo_devant_im)
     }
     func derriereIMMO() {
-        animer(textures.demo_derriere_im)
+        animerNR(textures.demo_derriere_im)
     }
     func profilIMMO() {
-        animer(textures.demo_profil_im)
+        animerNR(textures.demo_profil_im)
     }
     func devantATK() {
         animer(textures.demo_devant_atk)
@@ -476,7 +574,7 @@ class demoniste: heroSprite { // demoniste
     }
     private func animerNR(textures: [SKTexture]) {
         self.removeActionForKey(action)
-        self.runAction(SKAction.animateWithTextures(textures, timePerFrame: 0.1), withKey: action)
+        self.runAction(SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: 0.1)), withKey: action)
     }
     
     
@@ -493,37 +591,53 @@ class demoniste: heroSprite { // demoniste
         if let h = collectionIlot[haut] {
             if h.contient == ilotContient.vide {
                 mouvements.append(mouvement.haut(h))
-            } else if h.contient == ilotContient.batiment || h.contient == ilotContient.heroEnemie {
+            } else if h.contient == ilotContient.batiment || h.contient == self.TypeInverse {
                 self.attaque(mouvement.haut(h))
                 attaque = true
                 return
+            } else {
+                self.derriereIMMO()
             }
         }
         if let b = collectionIlot[bas] {
             if b.contient == ilotContient.vide {
                 mouvements.append(mouvement.bas(b))
-            } else if b.contient == ilotContient.batiment || b.contient == ilotContient.heroEnemie {
+            } else if b.contient == ilotContient.batiment || b.contient == self.TypeInverse {
                 self.attaque(mouvement.bas(b))
                 attaque = true
                 return
+            } else {
+                self.devantIMMO()
             }
         }
         if let g = collectionIlot[gauche] {
             if g.contient == ilotContient.vide {
                 mouvements.append(mouvement.gauche(g))
-            } else if g.contient == ilotContient.batiment || g.contient == ilotContient.heroEnemie {
+            } else if g.contient == ilotContient.batiment || g.contient == self.TypeInverse {
                 self.attaque(mouvement.gauche(g))
                 attaque = true
                 return
+            } else {
+                if self.gauchiste == false {
+                    self.xScale = self.xScale * -1
+                    gauchiste = true
+                }
+                self.profilIMMO()
             }
         }
         if let d = collectionIlot[droit] {
             if d.contient == ilotContient.vide {
                 mouvements.append(mouvement.droit(d))
-            } else if d.contient == ilotContient.batiment || d.contient == ilotContient.heroEnemie {
+            } else if d.contient == ilotContient.batiment || d.contient == self.TypeInverse {
                 self.attaque(mouvement.droit(d))
                 attaque = true
                 return
+            } else {
+                if self.gauchiste == true {
+                    self.xScale = self.xScale * -1
+                    gauchiste = false
+                }
+                self.profilIMMO()
             }
         }
         
@@ -614,9 +728,12 @@ class moltanica: heroSprite { // moltanica
         action = String(NSUUID.init())
         super.init(texture: textures.molta_devant[0], color: UIColor.cyanColor(), size: CGSize(width: information.solwidth*1.1, height: information.solwidth*0.8))
         self.zPosition = 200
-        self.devant()
+        self.devantIMMO()
         self.pv = 1700
-        self.degat = 150
+        self.degat = 200
+        self.initLabel()
+        
+
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -635,13 +752,13 @@ class moltanica: heroSprite { // moltanica
         animer(textures.molta_profil)
     }
     func devantIMMO() {
-        animer(textures.molta_devant_im)
+        animerNR(textures.molta_devant_im)
     }
     func derriereIMMO() {
-        animer(textures.molta_derriere_im)
+        animerNR(textures.molta_derriere_im)
     }
     func profilIMMO() {
-        animer(textures.molta_profil_im)
+        animerNR(textures.molta_profil_im)
     }
     func devantATK() {
         animer(textures.molta_devant_atk)
@@ -660,7 +777,7 @@ class moltanica: heroSprite { // moltanica
     }
     private func animerNR(textures: [SKTexture]) {
         self.removeActionForKey(action)
-        self.runAction(SKAction.animateWithTextures(textures, timePerFrame: 0.1), withKey: action)
+        self.runAction(SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false)), withKey: action)
     }
     
     
@@ -677,37 +794,53 @@ class moltanica: heroSprite { // moltanica
         if let h = collectionIlot[haut] {
             if h.contient == ilotContient.vide {
                 mouvements.append(mouvement.haut(h))
-            } else if h.contient == ilotContient.batiment || h.contient == ilotContient.heroEnemie {
+            } else if h.contient == ilotContient.batiment || h.contient == self.TypeInverse {
                 self.attaque(mouvement.haut(h))
                 attaque = true
                 return
+            } else {
+                self.derriereIMMO()
             }
         }
         if let b = collectionIlot[bas] {
             if b.contient == ilotContient.vide {
                 mouvements.append(mouvement.bas(b))
-            } else if b.contient == ilotContient.batiment || b.contient == ilotContient.heroEnemie {
+            } else if b.contient == ilotContient.batiment || b.contient == self.TypeInverse {
                 self.attaque(mouvement.bas(b))
                 attaque = true
                 return
+            } else {
+                self.devantIMMO()
             }
         }
         if let g = collectionIlot[gauche] {
             if g.contient == ilotContient.vide {
                 mouvements.append(mouvement.gauche(g))
-            } else if g.contient == ilotContient.batiment || g.contient == ilotContient.heroEnemie {
+            } else if g.contient == ilotContient.batiment || g.contient == self.TypeInverse {
                 self.attaque(mouvement.gauche(g))
                 attaque = true
                 return
+            } else {
+                if self.gauchiste == false {
+                    self.xScale = self.xScale * -1
+                    gauchiste = true
+                }
+                self.profilIMMO()
             }
         }
         if let d = collectionIlot[droit] {
             if d.contient == ilotContient.vide {
                 mouvements.append(mouvement.droit(d))
-            } else if d.contient == ilotContient.batiment || d.contient == ilotContient.heroEnemie {
+            } else if d.contient == ilotContient.batiment || d.contient == self.TypeInverse {
                 self.attaque(mouvement.droit(d))
                 attaque = true
                 return
+            } else {
+                if self.gauchiste == true {
+                    self.xScale = self.xScale * -1
+                    gauchiste = false
+                }
+                self.profilIMMO()
             }
         }
         
@@ -800,9 +933,10 @@ class vladDracula: heroSprite { // vlad dracula
         action = String(NSUUID.init())
         super.init(texture: textures.vlad_devant[0], color: UIColor.cyanColor(), size: CGSize(width: information.solwidth, height: information.solwidth*0.7))
         self.zPosition = 200
-        self.devant()
+        self.devantIMMO()
         self.pv = 950
-        self.degat = 325
+        self.degat = 300
+        self.initLabel()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -821,13 +955,13 @@ class vladDracula: heroSprite { // vlad dracula
         animer(textures.vlad_profil)
     }
     func devantIMMO() {
-        animer(textures.vlad_devant_im)
+        animerNR(textures.vlad_devant_im)
     }
     func derriereIMMO() {
-        animer(textures.vlad_derriere_im)
+        animerNR(textures.vlad_derriere_im)
     }
     func profilIMMO() {
-        animer(textures.vlad_profil_im)
+        animerNR(textures.vlad_profil_im)
     }
     func devantATK() {
         animer(textures.vlad_devant_atk)
@@ -846,7 +980,7 @@ class vladDracula: heroSprite { // vlad dracula
     }
     private func animerNR(textures: [SKTexture]) {
         self.removeActionForKey(action)
-        self.runAction(SKAction.animateWithTextures(textures, timePerFrame: 0.1), withKey: action)
+        self.runAction(SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false)), withKey: action)
     }
     
     
@@ -863,37 +997,53 @@ class vladDracula: heroSprite { // vlad dracula
         if let h = collectionIlot[haut] {
             if h.contient == ilotContient.vide {
                 mouvements.append(mouvement.haut(h))
-            } else if h.contient == ilotContient.batiment || h.contient == ilotContient.heroEnemie {
+            } else if h.contient == ilotContient.batiment || h.contient == self.TypeInverse {
                 self.attaque(mouvement.haut(h))
                 attaque = true
                 return
+            } else {
+                self.derriereIMMO()
             }
         }
         if let b = collectionIlot[bas] {
             if b.contient == ilotContient.vide {
                 mouvements.append(mouvement.bas(b))
-            } else if b.contient == ilotContient.batiment || b.contient == ilotContient.heroEnemie {
+            } else if b.contient == ilotContient.batiment || b.contient == self.TypeInverse {
                 self.attaque(mouvement.bas(b))
                 attaque = true
                 return
+            } else {
+                self.devantIMMO()
             }
         }
         if let g = collectionIlot[gauche] {
             if g.contient == ilotContient.vide {
                 mouvements.append(mouvement.gauche(g))
-            } else if g.contient == ilotContient.batiment || g.contient == ilotContient.heroEnemie {
+            } else if g.contient == ilotContient.batiment || g.contient == self.TypeInverse {
                 self.attaque(mouvement.gauche(g))
                 attaque = true
                 return
+            } else {
+                if self.gauchiste == false {
+                    self.xScale = self.xScale * -1
+                    gauchiste = true
+                }
+                self.profilIMMO()
             }
         }
         if let d = collectionIlot[droit] {
             if d.contient == ilotContient.vide {
                 mouvements.append(mouvement.droit(d))
-            } else if d.contient == ilotContient.batiment || d.contient == ilotContient.heroEnemie {
+            } else if d.contient == ilotContient.batiment || d.contient == self.TypeInverse {
                 self.attaque(mouvement.droit(d))
                 attaque = true
                 return
+            } else {
+                if self.gauchiste == true {
+                    self.xScale = self.xScale * -1
+                    gauchiste = false
+                }
+                self.profilIMMO()
             }
         }
         
