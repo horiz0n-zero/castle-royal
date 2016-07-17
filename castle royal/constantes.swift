@@ -14,7 +14,7 @@ var information: InformationGeneral!
 
 var collectionIlot = [CGFloat: ilotInfo]()
 
-
-
+var MatchTerminer = false
+var MatchGagnant = 0
 
 // constantes 

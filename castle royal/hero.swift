@@ -14,7 +14,7 @@ class heroSprite: SKSpriteNode {
     deinit { }
     
     var Halo: SKSpriteNode = SKSpriteNode()
-    
+    var flying = false
     var pv: Int = 500 {
         didSet {
             if pv <= 0 {
@@ -45,13 +45,15 @@ class heroSprite: SKSpriteNode {
             }
         }
     }
-    
+    var BatimentCible: ilotContient = ilotContient.batimentEnemie
     var allier: Bool = true {
         didSet {
             if self.allier {
                 self.TypeInverse = ilotContient.heroEnemie
+                self.BatimentCible = ilotContient.batimentEnemie
             } else {
                 self.TypeInverse = ilotContient.heroAllier
+                self.BatimentCible = ilotContient.batimentAllier
             }
         }
     }
@@ -138,7 +140,7 @@ class heroSprite: SKSpriteNode {
         collectionIlot[self.key()]?.contient = ilotContient.vide
         collectionIlot[self.key()]?.hero = nil 
         }
-        collectionIlot[self.key()]?.hero = self
+        collectionIlot[self.key()]?.hero = self 
         if collectionIlot[self.key()]?.contient == ilotContient.deploiementAllier || collectionIlot[self.key()]?.contient == ilotContient.deploiementEnemie && collectionIlot[self.key()]?.hero != nil {
             collectionIlot[self.key()]?.hero = nil
         }
@@ -340,6 +342,7 @@ class mageSpirituel: heroSprite {
         self.pv = 250
         self.degat = 550
         self.initLabel()
+        self.flying = true
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -402,7 +405,7 @@ class mageSpirituel: heroSprite {
         if let h = collectionIlot[haut] {
             if h.contient == ilotContient.vide {
            mouvements.append(mouvement.haut(h))
-            } else if h.contient == ilotContient.batiment || h.contient == self.TypeInverse {
+            } else if h.contient == self.BatimentCible || h.contient == self.TypeInverse {
            self.attaque(mouvement.haut(h))
                 attaque = true
                 return
@@ -413,7 +416,7 @@ class mageSpirituel: heroSprite {
         if let b = collectionIlot[bas] {
             if b.contient == ilotContient.vide {
            mouvements.append(mouvement.bas(b))
-            } else if b.contient == ilotContient.batiment || b.contient == self.TypeInverse {
+            } else if b.contient == self.BatimentCible || b.contient == self.TypeInverse {
            self.attaque(mouvement.bas(b))
                 attaque = true
                 return
@@ -424,7 +427,7 @@ class mageSpirituel: heroSprite {
         if let g = collectionIlot[gauche] {
             if g.contient == ilotContient.vide {
            mouvements.append(mouvement.gauche(g))
-            } else if g.contient == ilotContient.batiment || g.contient == self.TypeInverse {
+            } else if g.contient == self.BatimentCible || g.contient == self.TypeInverse {
            self.attaque(mouvement.gauche(g))
                 attaque = true
                 return
@@ -439,7 +442,7 @@ class mageSpirituel: heroSprite {
         if let d = collectionIlot[droit] {
             if d.contient == ilotContient.vide {
            mouvements.append(mouvement.droit(d))
-            } else if d.contient == ilotContient.batiment || d.contient == self.TypeInverse {
+            } else if d.contient == self.BatimentCible || d.contient == self.TypeInverse {
            self.attaque(mouvement.droit(d))
                 attaque = true
                 return
@@ -543,6 +546,7 @@ class demoniste: heroSprite { // demoniste
         self.pv = 750
         self.degat = 175
         self.initLabel()
+        
       
     }
     
@@ -604,7 +608,7 @@ class demoniste: heroSprite { // demoniste
         if let h = collectionIlot[haut] {
             if h.contient == ilotContient.vide {
                 mouvements.append(mouvement.haut(h))
-            } else if h.contient == ilotContient.batiment || h.contient == self.TypeInverse {
+            } else if h.contient == self.BatimentCible || h.contient == self.TypeInverse {
                 self.attaque(mouvement.haut(h))
                 attaque = true
                 return
@@ -615,7 +619,7 @@ class demoniste: heroSprite { // demoniste
         if let b = collectionIlot[bas] {
             if b.contient == ilotContient.vide {
                 mouvements.append(mouvement.bas(b))
-            } else if b.contient == ilotContient.batiment || b.contient == self.TypeInverse {
+            } else if b.contient == self.BatimentCible || b.contient == self.TypeInverse {
                 self.attaque(mouvement.bas(b))
                 attaque = true
                 return
@@ -626,7 +630,7 @@ class demoniste: heroSprite { // demoniste
         if let g = collectionIlot[gauche] {
             if g.contient == ilotContient.vide {
                 mouvements.append(mouvement.gauche(g))
-            } else if g.contient == ilotContient.batiment || g.contient == self.TypeInverse {
+            } else if g.contient == self.BatimentCible || g.contient == self.TypeInverse {
                 self.attaque(mouvement.gauche(g))
                 attaque = true
                 return
@@ -641,7 +645,7 @@ class demoniste: heroSprite { // demoniste
         if let d = collectionIlot[droit] {
             if d.contient == ilotContient.vide {
                 mouvements.append(mouvement.droit(d))
-            } else if d.contient == ilotContient.batiment || d.contient == self.TypeInverse {
+            } else if d.contient == self.BatimentCible || d.contient == self.TypeInverse {
                 self.attaque(mouvement.droit(d))
                 attaque = true
                 return
@@ -745,7 +749,7 @@ class moltanica: heroSprite { // moltanica
         self.pv = 1700
         self.degat = 200
         self.initLabel()
-        
+        self.flying = true
 
     }
     
@@ -807,7 +811,7 @@ class moltanica: heroSprite { // moltanica
         if let h = collectionIlot[haut] {
             if h.contient == ilotContient.vide {
                 mouvements.append(mouvement.haut(h))
-            } else if h.contient == ilotContient.batiment || h.contient == self.TypeInverse {
+            } else if h.contient == self.BatimentCible || h.contient == self.TypeInverse {
                 self.attaque(mouvement.haut(h))
                 attaque = true
                 return
@@ -818,7 +822,7 @@ class moltanica: heroSprite { // moltanica
         if let b = collectionIlot[bas] {
             if b.contient == ilotContient.vide {
                 mouvements.append(mouvement.bas(b))
-            } else if b.contient == ilotContient.batiment || b.contient == self.TypeInverse {
+            } else if b.contient == self.BatimentCible || b.contient == self.TypeInverse {
                 self.attaque(mouvement.bas(b))
                 attaque = true
                 return
@@ -829,7 +833,7 @@ class moltanica: heroSprite { // moltanica
         if let g = collectionIlot[gauche] {
             if g.contient == ilotContient.vide {
                 mouvements.append(mouvement.gauche(g))
-            } else if g.contient == ilotContient.batiment || g.contient == self.TypeInverse {
+            } else if g.contient == self.BatimentCible || g.contient == self.TypeInverse {
                 self.attaque(mouvement.gauche(g))
                 attaque = true
                 return
@@ -844,7 +848,7 @@ class moltanica: heroSprite { // moltanica
         if let d = collectionIlot[droit] {
             if d.contient == ilotContient.vide {
                 mouvements.append(mouvement.droit(d))
-            } else if d.contient == ilotContient.batiment || d.contient == self.TypeInverse {
+            } else if d.contient == self.BatimentCible || d.contient == self.TypeInverse {
                 self.attaque(mouvement.droit(d))
                 attaque = true
                 return
@@ -950,6 +954,7 @@ class vladDracula: heroSprite { // vlad dracula
         self.pv = 950
         self.degat = 300
         self.initLabel()
+        self.flying = true 
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -1010,7 +1015,7 @@ class vladDracula: heroSprite { // vlad dracula
         if let h = collectionIlot[haut] {
             if h.contient == ilotContient.vide {
                 mouvements.append(mouvement.haut(h))
-            } else if h.contient == ilotContient.batiment || h.contient == self.TypeInverse {
+            } else if h.contient == self.BatimentCible || h.contient == self.TypeInverse {
                 self.attaque(mouvement.haut(h))
                 attaque = true
                 return
@@ -1021,7 +1026,7 @@ class vladDracula: heroSprite { // vlad dracula
         if let b = collectionIlot[bas] {
             if b.contient == ilotContient.vide {
                 mouvements.append(mouvement.bas(b))
-            } else if b.contient == ilotContient.batiment || b.contient == self.TypeInverse {
+            } else if b.contient == self.BatimentCible || b.contient == self.TypeInverse {
                 self.attaque(mouvement.bas(b))
                 attaque = true
                 return
@@ -1032,7 +1037,7 @@ class vladDracula: heroSprite { // vlad dracula
         if let g = collectionIlot[gauche] {
             if g.contient == ilotContient.vide {
                 mouvements.append(mouvement.gauche(g))
-            } else if g.contient == ilotContient.batiment || g.contient == self.TypeInverse {
+            } else if g.contient == self.BatimentCible || g.contient == self.TypeInverse {
                 self.attaque(mouvement.gauche(g))
                 attaque = true
                 return
@@ -1047,7 +1052,7 @@ class vladDracula: heroSprite { // vlad dracula
         if let d = collectionIlot[droit] {
             if d.contient == ilotContient.vide {
                 mouvements.append(mouvement.droit(d))
-            } else if d.contient == ilotContient.batiment || d.contient == self.TypeInverse {
+            } else if d.contient == self.BatimentCible || d.contient == self.TypeInverse {
                 self.attaque(mouvement.droit(d))
                 attaque = true
                 return

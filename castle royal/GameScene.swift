@@ -22,7 +22,9 @@ class GameScene: SKScene {
     let selectionSpriteIlot = SKSpriteNode(texture: textures.zone_select)
     var heroPosable: heroSprite? = nil
     
-    
+    var victoireVar = false
+    let bati: batiment? = batiment(imageNamed: "cristal_allier")
+    let bat: batiment? = batiment(imageNamed: "cristal_enemie")
     
     required init?(coder aDecoder: NSCoder) {
         fatalError()
@@ -72,15 +74,39 @@ class GameScene: SKScene {
                 collectionIlot[sprite.ide]?.contient = ilotContient.deploiementEnemie
             }
             
-            if i == 18 {
-               let bat = batiment(imageNamed: "zap")
-               bat.position = CGPointMake(0, 75)
-               sprite.addChild(bat)
-               bat.zPosition = sprite.zPosition + 1
-               bat.ide = sprite.ide 
-               collectionIlot[sprite.ide]?.contient = ilotContient.batiment
+            if i == 23 {
+               
+               bat!.position = CGPointMake(0, 55)
+               bat!.size = CGSize(width: sprite.size.width*0.7, height: sprite.size.width*0.7)
+               sprite.addChild(bat!)
+               bat!.zPosition = sprite.zPosition + 1
+               bat!.ide = sprite.ide
+               collectionIlot[sprite.ide]?.contient = ilotContient.batimentEnemie
                collectionIlot[sprite.ide]!.building = bat
-               bat.parametrerLabel()
+               bat!.parametrerLabel()
+                
+                let particule = SKEmitterNode(fileNamed: "cristal_Doree.sks")
+                bat!.addChild(particule!)
+                particule?.targetNode = self
+                
+                
+            }
+            if i == 13 {
+                
+                bati!.position = CGPointMake(0, 55)
+                bati!.size = CGSize(width: sprite.size.width*0.7, height: sprite.size.width*0.7)
+                sprite.addChild(bati!)
+                bati!.zPosition = sprite.zPosition + 1
+                bati!.ide = sprite.ide
+                collectionIlot[sprite.ide]?.contient = ilotContient.batimentAllier
+                collectionIlot[sprite.ide]!.building = bati
+                bati!.parametrerLabel()
+                
+                let particule = SKEmitterNode(fileNamed: "cristal_Bleu.sks")
+                bati!.addChild(particule!)
+                particule?.targetNode = self
+
+
             }
             
             
@@ -290,6 +316,8 @@ class GameScene: SKScene {
                             heroPosable?.info = heroInfo(colonne: ile.colonne, ranger: ile.ranger)
                             selectionSpriteIlot.blendMode = SKBlendMode.Alpha
                             selectionCarte.ok = true
+                            
+                            
                         } else {
                             selectionSpriteIlot.blendMode = SKBlendMode.Subtract
                             heroPosable?.position = CGPoint(x: ile.position.x, y: ile.position.y + 75)
@@ -313,6 +341,7 @@ class GameScene: SKScene {
         if selectionCarte.select == true && selectionCarte.heroVisible == true && selectionCarte.ok == true {
             
             if let copy = heroPosable {
+               
                self.heroPosable?.removeFromParent()
                self.heroPosable = nil
                copy.name = "hero"
@@ -381,6 +410,57 @@ class GameScene: SKScene {
                 })
                 
                 ]))
+        
+        
+    }
+    
+    override func didFinishUpdate() {
+    
+        if MatchTerminer {
+            
+            victoireVar = MatchGagnant == 1 ? true : false
+            self.victoire()
+            MatchTerminer = false
+        }
+    
+    }
+    
+    
+    func victoire() {
+        self.removeAllActions()
+        
+        
+        
+        
+        self.runAction(SKAction.sequence([
+            SKAction.waitForDuration(2),
+            SKAction.runBlock({
+                
+                let label = SKLabelNode(fontNamed: "SegoePrint-Bold")
+                label.position = CGPoint(x: self.frame.width/2, y: self.frame.height/2)
+                label.fontColor = UIColor.orangeColor()
+                label.setScale(0.0)
+                label.fontSize = 120
+                self.addChild(label)
+                label.zPosition = 500
+                label.runAction(SKAction.scaleTo(1.0, duration: 0.7))
+                
+                if !self.victoireVar {
+                    self.runAction(SKAction.playSoundFileNamed("Battle_Lose.mp3", waitForCompletion: false))
+                    label.text = "DEFAITE !"
+                    label.fontColor = UIColor.redColor()
+                } else {
+                    self.runAction(SKAction.playSoundFileNamed("Battle_Win.mp3", waitForCompletion: false))
+                    label.text = "VICTOIRE !"
+                }
+            }), SKAction.waitForDuration(2),
+            SKAction.runBlock({
+                let sceneS = GameScene(size: self.frame.size)
+                let transition = SKTransition.fadeWithColor(self.victoireVar ? UIColor.greenColor() : UIColor.redColor(), duration: 3)
+                self.view?.presentScene(sceneS, transition: transition)
+
+            })
+            ]))
         
         
     }

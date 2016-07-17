@@ -44,11 +44,12 @@ struct InformationGeneral {
 
 enum ilotContient: UInt8 {
     case vide = 1
-    case batiment = 2
-    case heroAllier = 3
-    case heroEnemie = 4
-    case deploiementAllier = 5
-    case deploiementEnemie = 6
+    case batimentEnemie = 2
+    case batimentAllier = 3
+    case heroAllier = 4
+    case heroEnemie = 5
+    case deploiementAllier = 6
+    case deploiementEnemie = 7
 }
 
 class ilot: SKSpriteNode {
@@ -97,20 +98,24 @@ enum hero {
 class batiment: SKSpriteNode {
     var ide: CGFloat = 0.0
     let label = SKLabelNode(text: "4500")
-    var pv: Int = 120000 {
+    var type: ilotContient = ilotContient.batimentAllier
+    var pv: Int = 5000 {
         didSet {
             if pv <= 0 {
                 collectionIlot[self.ide]!.contient = ilotContient.vide
                 collectionIlot[self.ide]!.building = nil
                 information.son_batiment_detruit()
+                MatchTerminer = true
+                MatchGagnant = self.type == ilotContient.batimentAllier ? 1 : 2
                 self.removeFromParent()
+                
             } else {
                 
                 
                 switch self.pv {
-                case 0...30000:
+                case 0...15000:
                     label.fontColor = UIColor.redColor()
-                case 30000...80000:
+                case 15000...30000:
                     label.fontColor = UIColor.orangeColor()
                 default:
                     label.fontColor = UIColor.greenColor()
@@ -185,6 +190,22 @@ struct selection {
 class SKSuperLabelNode: SKLabelNode {
     var pvOriginel: Int = 0
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
