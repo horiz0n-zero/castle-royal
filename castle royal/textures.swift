@@ -26,6 +26,13 @@ struct textures {
     static let carteDuc = SKTexture(imageNamed: "item0213")
     static let carteVlad = SKTexture(imageNamed: "item0266")
     
+    static let haloViolet = SKTexture(imageNamed: "haloViolet")
+    static let haloVert = SKTexture(imageNamed: "haloVert")
+    static let haloBleu = SKTexture(imageNamed: "haloBleu")
+    
+    static let haloVertBig = SKTexture(imageNamed: "haloV")
+    static let haloBleuBig = SKTexture(imageNamed: "haloB")
+    
     static let anim_demo_bim = [
     SKTexture(imageNamed: "demoBim1"),
     SKTexture(imageNamed: "demoBim2"),

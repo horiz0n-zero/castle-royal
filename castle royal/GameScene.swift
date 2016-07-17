@@ -72,7 +72,7 @@ class GameScene: SKScene {
                 collectionIlot[sprite.ide]?.contient = ilotContient.deploiementEnemie
             }
             
-            if i == 28 {
+            if i == 18 {
                let bat = batiment(imageNamed: "zap")
                bat.position = CGPointMake(0, 75)
                sprite.addChild(bat)
@@ -83,11 +83,6 @@ class GameScene: SKScene {
                bat.parametrerLabel()
             }
             
-            let label = SKLabelNode(fontNamed: "SegoePrint-Bold")
-            sprite.addChild(label)
-            sprite.label = label
-            label.fontSize = 12
-            label.text = "\(collectionIlot[sprite.ide]!.contient)"
             
         }
         // fin ilot 
@@ -101,14 +96,16 @@ class GameScene: SKScene {
                 
             })
             ])))
-        self.popEnemie(self.randomCarte(), colonne: 7, ranger: 1)
-        self.popEnemie(self.randomCarte(), colonne: 7, ranger: 2)
-        self.popEnemie(self.randomCarte(), colonne: 7, ranger: 4)
-        self.popEnemie(self.randomCarte(), colonne: 7, ranger: 5)
+        
         
         
     }
     
+    func rangerAleatoire() -> CGFloat {
+        return CGFloat(arc4random_uniform(5) + 1)
+    }
+    
+       
     func popEnemie(type: hero, colonne: CGFloat, ranger: CGFloat) { // restriction case deploiement !
         
         if let ilot = collectionIlot[key(colonne, ranger: ranger)] {
@@ -128,6 +125,7 @@ class GameScene: SKScene {
                     fatalError("attention aucune carte n'est posable -> selectioncarte.pier.contienthero = nul ou le hero n'est pas specifier")
                 }
                 heroe.allier = false
+                heroe.initHalo()
                 heroe.position = CGPoint(x: ilot.position.x, y: ilot.position.y + 150)
                 heroe.name = "hero"
                 heroe.info = heroInfo(colonne: colonne, ranger: ranger)
@@ -318,6 +316,7 @@ class GameScene: SKScene {
                self.heroPosable?.removeFromParent()
                self.heroPosable = nil
                copy.name = "hero"
+               copy.initHalo()
                self.addChild(copy)
                selectionCarte.select = false
                selectionSprite.hidden = true
@@ -331,7 +330,8 @@ class GameScene: SKScene {
                 SKAction.waitForDuration(1),
                 SKAction.removeFromParent()
                 ]))
-                
+                self.ProchaineCarte(self.randomCarte(), pier: selectionCarte.pier)
+                self.popEnemie(self.randomCarte(), colonne: 7, ranger: self.rangerAleatoire())
                 for pier in boite_a_pierre {
                     if pier.numero == number {
                        pier.carte = nil
@@ -352,15 +352,39 @@ class GameScene: SKScene {
         
     }
     
-    override func update(currentTime: NSTimeInterval) {
-        for ilo in IlotNode.children {
-            if ilo is ilot {
-                let ile = ilo as! ilot
-                ile.label.text = "\(collectionIlot[ile.ide]!.contient)"
-            }
+    func ProchaineCarte(carteType: hero, pier: pierre) {
+     
+        var carte: SKSpriteNode!
+        switch carteType {
+        case .demoniste:
+            carte = SKSpriteNode(texture: textures.carteDemoniste)
+        case .duc:
+            carte = SKSpriteNode(texture: textures.carteDuc)
+        case .mage:
+            carte = SKSpriteNode(texture: textures.carteMage)
+        case .moltanica:
+            carte = SKSpriteNode(texture: textures.carteMoltanica)
+        case .vlad:
+            carte = SKSpriteNode(texture: textures.carteVlad)
         }
+        carte.setScale(0.0)
+        carte.zPosition = pier.zPosition + 2
+        pier.addChild(carte)
+        pier.contientHero = carteType
+        carte.runAction(
+            SKAction.sequence([
+            SKAction.waitForDuration(0.8),
+            SKAction.scaleTo(1.0, duration: 0.8),
+                SKAction.runBlock({
+                    pier.carte = carte
+                    self.runAction(SKAction.playSoundFileNamed("pioche.mp3", waitForCompletion: false))
+                })
+                
+                ]))
+        
+        
     }
-   
+    
 }
 
 

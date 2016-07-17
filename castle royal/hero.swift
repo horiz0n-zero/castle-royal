@@ -13,6 +13,7 @@ class heroSprite: SKSpriteNode {
     
     deinit { }
     
+    var Halo: SKSpriteNode = SKSpriteNode()
     
     var pv: Int = 500 {
         didSet {
@@ -71,6 +72,16 @@ class heroSprite: SKSpriteNode {
         self.addChild(label)
         
         
+    }
+    
+    func initHalo() {
+        let halo = SKSpriteNode(texture: self.allier ? textures.haloVert : textures.haloViolet)
+        self.Halo = halo
+        Halo.position.y -= 25
+        Halo.zPosition = -1
+        Halo.alpha = 0.5
+        halo.blendMode = SKBlendMode.Add
+        self.addChild(Halo)
     }
     
     private enum mouvement {
@@ -219,7 +230,7 @@ class heroSprite: SKSpriteNode {
                     information.AnimationNode?.addChild(eclat)
                     eclat.hidden = false
                     eclat.position = positionFinal
-                    eclat.runAction(SKAction.animateWithTextures(textures.anim_demo_bim, timePerFrame: 0.1, resize: true, restore: false))
+                    eclat.runAction(SKAction.animateWithTextures(textures.anim_demo_bim, timePerFrame: 0.1))
                 }),
                 SKAction.waitForDuration(0.5),
                 SKAction.runBlock({
@@ -369,10 +380,12 @@ class mageSpirituel: heroSprite {
     private func animer(textures: [SKTexture]) {
         self.removeActionForKey(action)
         self.runAction(SKAction.animateWithTextures(textures, timePerFrame: 0.1), withKey: action)
+       
     }
     private func animerNR(textures: [SKTexture]) {
         self.removeActionForKey(action)
         self.runAction(SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: 0.1)), withKey: action)
+        
     }
 
     
@@ -447,7 +460,6 @@ class mageSpirituel: heroSprite {
         self.vider()
         self.sedeplacer(mouvements[jevaisoumaintenant])
         
-        
     }
     
     private func sedeplacer(movement: mouvement) {
@@ -484,10 +496,11 @@ class mageSpirituel: heroSprite {
             self.avancerColonne()
         }
         
+        
     }
     
     private func attaque(movement: mouvement) {
-        
+     
         information.son_hero_attaque()
         switch movement {
         case .bas(let b):
@@ -574,7 +587,7 @@ class demoniste: heroSprite { // demoniste
     }
     private func animerNR(textures: [SKTexture]) {
         self.removeActionForKey(action)
-        self.runAction(SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: 0.1)), withKey: action)
+        self.runAction(SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false)), withKey: action)
     }
     
     

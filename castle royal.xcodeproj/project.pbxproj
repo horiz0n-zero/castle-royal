@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		881926101D3BA10400733332 /* pioche.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8819260F1D3BA10400733332 /* pioche.mp3 */; };
 		88E54D6F1D3921B0007443E7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E54D6E1D3921B0007443E7 /* AppDelegate.swift */; };
 		88E54D731D3921B0007443E7 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E54D721D3921B0007443E7 /* GameScene.swift */; };
 		88E54D751D3921B0007443E7 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E54D741D3921B0007443E7 /* GameViewController.swift */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8819260F1D3BA10400733332 /* pioche.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = pioche.mp3; sourceTree = "<group>"; };
 		88E54D6B1D3921B0007443E7 /* castle royal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "castle royal.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		88E54D6E1D3921B0007443E7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		88E54D721D3921B0007443E7 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -67,6 +69,7 @@
 				88EEB5811D3A85EA00709429 /* hero_attack.mp3 */,
 				88EEB5831D3ACE4900709429 /* buildingEx.mp3 */,
 				88EEB5851D3AD36200709429 /* vladBim.mp3 */,
+				8819260F1D3BA10400733332 /* pioche.mp3 */,
 				88EEB5871D3AD96D00709429 /* baby blocks.ttf */,
 				88EEB5891D3ADFDA00709429 /* segoeprb.ttf */,
 				88E54D6D1D3921B0007443E7 /* castle royal */,
@@ -164,6 +167,7 @@
 				88EEB5821D3A85EA00709429 /* hero_attack.mp3 in Resources */,
 				88E54D7A1D3921B0007443E7 /* Assets.xcassets in Resources */,
 				88EEB5881D3AD96D00709429 /* baby blocks.ttf in Resources */,
+				881926101D3BA10400733332 /* pioche.mp3 in Resources */,
 				88E54D781D3921B0007443E7 /* Main.storyboard in Resources */,
 				88EEB57F1D3A5E6100709429 /* select.caf in Resources */,
 				88EEB58B1D3ADFE300709429 /* segoeprb.ttf in Resources */,

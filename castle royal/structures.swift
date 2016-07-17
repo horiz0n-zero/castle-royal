@@ -56,7 +56,7 @@ class ilot: SKSpriteNode {
     var colonne: CGFloat!
     var ranger: CGFloat!
     
-    var label: SKLabelNode! // @@
+   
 }
 
 struct ilotInfo {
@@ -97,7 +97,7 @@ enum hero {
 class batiment: SKSpriteNode {
     var ide: CGFloat = 0.0
     let label = SKLabelNode(text: "4500")
-    var pv: Int = 12000 {
+    var pv: Int = 120000 {
         didSet {
             if pv <= 0 {
                 collectionIlot[self.ide]!.contient = ilotContient.vide
@@ -108,9 +108,9 @@ class batiment: SKSpriteNode {
                 
                 
                 switch self.pv {
-                case 0...3000:
+                case 0...30000:
                     label.fontColor = UIColor.redColor()
-                case 3000...8000:
+                case 30000...80000:
                     label.fontColor = UIColor.orangeColor()
                 default:
                     label.fontColor = UIColor.greenColor()
@@ -185,6 +185,19 @@ struct selection {
 class SKSuperLabelNode: SKLabelNode {
     var pvOriginel: Int = 0
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
