@@ -84,13 +84,13 @@ class GameScene: SKScene {
                collectionIlot[sprite.ide]?.contient = ilotContient.batimentEnemie
                collectionIlot[sprite.ide]!.building = bat
                bat!.parametrerLabel()
-                
+               
                 let particule = SKEmitterNode(fileNamed: "cristal_Doree.sks")
                 bat!.addChild(particule!)
                 particule?.targetNode = self
                 
                 
-            }
+            }  
             if i == 13 {
                 
                 bati!.position = CGPointMake(0, 55)
@@ -101,7 +101,7 @@ class GameScene: SKScene {
                 collectionIlot[sprite.ide]?.contient = ilotContient.batimentAllier
                 collectionIlot[sprite.ide]!.building = bati
                 bati!.parametrerLabel()
-                
+                bati!.type = ilotContient.batimentEnemie
                 let particule = SKEmitterNode(fileNamed: "cristal_Bleu.sks")
                 bati!.addChild(particule!)
                 particule?.targetNode = self
@@ -361,6 +361,9 @@ class GameScene: SKScene {
                 ]))
                 self.ProchaineCarte(self.randomCarte(), pier: selectionCarte.pier)
                 self.popEnemie(self.randomCarte(), colonne: 7, ranger: self.rangerAleatoire())
+                self.popEnemie(self.randomCarte(), colonne: 7, ranger: self.rangerAleatoire())
+                self.popEnemie(self.randomCarte(), colonne: 7, ranger: self.rangerAleatoire())
+
                 for pier in boite_a_pierre {
                     if pier.numero == number {
                        pier.carte = nil
