@@ -90,7 +90,7 @@ class GameScene: SKScene {
                 particule?.targetNode = self
                 
                 
-            }  
+            }
             if i == 13 {
                 
                 bati!.position = CGPointMake(0, 55)
@@ -147,6 +147,14 @@ class GameScene: SKScene {
                     heroe = moltanica()
                 case hero.vlad:
                     heroe = vladDracula()
+                case hero.roiFantome:
+                    heroe = roiFantome()
+                case hero.grimfield:
+                    heroe = grimfield()
+                case hero.harpie:
+                    heroe = Harpie()
+                case hero.sirenia:
+                    heroe = sirenia()
                 default:
                     fatalError("attention aucune carte n'est posable -> selectioncarte.pier.contienthero = nul ou le hero n'est pas specifier")
                 }
@@ -166,21 +174,9 @@ class GameScene: SKScene {
         
         self.enumerateChildNodesWithName("hero", usingBlock: { (superHero, _) in
             
-            if superHero is mageSpirituel {
-                let mage = superHero as! mageSpirituel
-                mage.reflexion()
-            }
-            if superHero is demoniste {
-                let demo = superHero as! demoniste
-                demo.reflexion()
-            }
-            if superHero is moltanica {
-                let molta = superHero as! moltanica
-                molta.reflexion()
-            }
-            if superHero is vladDracula {
-                let vlad = superHero as! vladDracula
-                vlad.reflexion()
+            if superHero is heroSprite {
+                let Hero = superHero as! heroSprite
+                Hero.reflexion()
             }
             
         })
@@ -191,7 +187,7 @@ class GameScene: SKScene {
     }
     
     func randomCarte() -> hero {
-        let a = Int(arc4random_uniform(4) + 1) // n pour s'assurer de ne pas tomber sur ce qui n'est pas encore integrer
+        let a = Int(arc4random_uniform(8) + 1) // n pour s'assurer de ne pas tomber sur ce qui n'est pas encore integrer
         switch a {
         case 1:
             return hero.mage
@@ -201,6 +197,14 @@ class GameScene: SKScene {
             return hero.moltanica
         case 4:
             return hero.vlad
+        case 5:
+            return hero.roiFantome
+        case 6:
+            return hero.grimfield
+        case 7:
+            return hero.harpie
+        case 8:
+            return hero.sirenia
         default:
             return hero.mage
         }
@@ -299,6 +303,14 @@ class GameScene: SKScene {
                                 heroPosable = moltanica()
                             case hero.vlad:
                                 heroPosable = vladDracula()
+                            case hero.roiFantome:
+                                heroPosable = roiFantome()
+                            case hero.grimfield:
+                                heroPosable = grimfield()
+                            case hero.harpie:
+                                heroPosable = Harpie()
+                            case hero.sirenia:
+                                heroPosable = sirenia()
                             default:
                                 fatalError("attention aucune carte n'est posable -> selectioncarte.pier.contienthero = nul ou le hero n'est pas specifier")
                             }
@@ -361,9 +373,7 @@ class GameScene: SKScene {
                 ]))
                 self.ProchaineCarte(self.randomCarte(), pier: selectionCarte.pier)
                 self.popEnemie(self.randomCarte(), colonne: 7, ranger: self.rangerAleatoire())
-                self.popEnemie(self.randomCarte(), colonne: 7, ranger: self.rangerAleatoire())
-                self.popEnemie(self.randomCarte(), colonne: 7, ranger: self.rangerAleatoire())
-
+                
                 for pier in boite_a_pierre {
                     if pier.numero == number {
                        pier.carte = nil
@@ -398,6 +408,14 @@ class GameScene: SKScene {
             carte = SKSpriteNode(texture: textures.carteMoltanica)
         case .vlad:
             carte = SKSpriteNode(texture: textures.carteVlad)
+        case .roiFantome:
+            carte = SKSpriteNode(texture: textures.carteRoiFantome)
+        case .grimfield:
+            carte = SKSpriteNode(texture: textures.carteGrimfield)
+        case .sirenia:
+            carte = SKSpriteNode(texture: textures.carteSirenia)
+        case .harpie:
+            carte = SKSpriteNode(texture: textures.carteReineHarpie)
         }
         carte.setScale(0.0)
         carte.zPosition = pier.zPosition + 2

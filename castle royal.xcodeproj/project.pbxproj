@@ -22,6 +22,7 @@
 		88E54D871D392286007443E7 /* constantes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E54D861D392286007443E7 /* constantes.swift */; };
 		88E54D891D39229B007443E7 /* structures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E54D881D39229B007443E7 /* structures.swift */; };
 		88E54D8F1D394707007443E7 /* hero.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E54D8E1D394707007443E7 /* hero.swift */; };
+		88EAA4651D3CF61100911A4D /* ghost_puff.caf in Resources */ = {isa = PBXBuildFile; fileRef = 88EAA4641D3CF61100911A4D /* ghost_puff.caf */; };
 		88EEB57F1D3A5E6100709429 /* select.caf in Resources */ = {isa = PBXBuildFile; fileRef = 88E54D8A1D393D6C007443E7 /* select.caf */; };
 		88EEB5801D3A5E6800709429 /* select_ok.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88E54D8C1D393EC1007443E7 /* select_ok.mp3 */; };
 		88EEB5821D3A85EA00709429 /* hero_attack.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 88EEB5811D3A85EA00709429 /* hero_attack.mp3 */; };
@@ -51,6 +52,7 @@
 		88E54D8A1D393D6C007443E7 /* select.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = select.caf; sourceTree = "<group>"; };
 		88E54D8C1D393EC1007443E7 /* select_ok.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = select_ok.mp3; sourceTree = "<group>"; };
 		88E54D8E1D394707007443E7 /* hero.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = hero.swift; sourceTree = "<group>"; };
+		88EAA4641D3CF61100911A4D /* ghost_puff.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ghost_puff.caf; sourceTree = "<group>"; };
 		88EEB5811D3A85EA00709429 /* hero_attack.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = hero_attack.mp3; sourceTree = "<group>"; };
 		88EEB5831D3ACE4900709429 /* buildingEx.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = buildingEx.mp3; sourceTree = "<group>"; };
 		88EEB5851D3AD36200709429 /* vladBim.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = vladBim.mp3; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 				881926151D3BD3D800733332 /* cristal_Bleu.sks */,
 				881926191D3BE4A600733332 /* Battle_Lose.mp3 */,
 				8819261A1D3BE4A600733332 /* Battle_Win.mp3 */,
+				88EAA4641D3CF61100911A4D /* ghost_puff.caf */,
 				88E54D6D1D3921B0007443E7 /* castle royal */,
 				88E54D6C1D3921B0007443E7 /* Products */,
 			);
@@ -185,6 +188,7 @@
 				88E54D781D3921B0007443E7 /* Main.storyboard in Resources */,
 				88EEB57F1D3A5E6100709429 /* select.caf in Resources */,
 				8819261C1D3BE4A600733332 /* Battle_Win.mp3 in Resources */,
+				88EAA4651D3CF61100911A4D /* ghost_puff.caf in Resources */,
 				881926131D3BD0C000733332 /* cristal_Doree.sks in Resources */,
 				88EEB58B1D3ADFE300709429 /* segoeprb.ttf in Resources */,
 				88EEB5861D3AD36200709429 /* vladBim.mp3 in Resources */,

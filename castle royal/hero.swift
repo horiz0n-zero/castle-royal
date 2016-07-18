@@ -13,6 +13,20 @@ class heroSprite: SKSpriteNode {
     
     deinit { }
     
+    var action: String!
+    var gauchiste: Bool = true
+    var useAutoResize = false
+    var t_devant: [SKTexture]!
+    var t_devantATK: [SKTexture]!
+    var t_devantIMO: [SKTexture]!
+    var t_derrier: [SKTexture]!
+    var t_derrierATK: [SKTexture]!
+    var t_derrierIMO: [SKTexture]!
+    var t_profil: [SKTexture]!
+    var t_profilATK: [SKTexture]!
+    var t_profilIMO: [SKTexture]!
+    var heroType: hero!
+    
     var Halo: SKSpriteNode = SKSpriteNode()
     var flying = false
     var pv: Int = 500 {
@@ -155,6 +169,201 @@ class heroSprite: SKSpriteNode {
         collectionIlot[key]?.hero = self
     }
     
+    // =============================== reflexion
+    func devant() {
+        animer(self.t_devant)
+    }
+    func derriere() {
+        animer(self.t_derrier)
+    }
+    func profil() {
+        animer(self.t_profil)
+    }
+    func devantIMMO() {
+        animerNR(self.t_devantIMO)
+    }
+    func derriereIMMO() {
+        animerNR(self.t_derrierIMO)
+    }
+    func profilIMMO() {
+        animerNR(self.t_profilIMO)
+    }
+    func devantATK() {
+        animer(self.t_devantATK)
+    }
+    func derriereATK() {
+        animer(self.t_derrierATK)
+    }
+    func profilATK() {
+        animer(self.t_profilATK)
+    }
+    
+    
+    private func animer(textures: [SKTexture]) {
+        self.removeActionForKey(action)
+        if !self.useAutoResize {
+        self.runAction(SKAction.animateWithTextures(textures, timePerFrame: 0.1), withKey: action)
+        } else {
+          self.runAction(SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false), withKey: action)
+        }
+        
+    }
+    private func animerNR(textures: [SKTexture]) {
+        self.removeActionForKey(action)
+        if !self.useAutoResize {
+        self.runAction(SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: 0.1)), withKey: action)
+        } else {
+        self.runAction(SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false)), withKey: action)
+        }
+        
+    }
+    
+    
+    func reflexion() {
+        
+        let haut = self.key(colonnesup: 1, rangersup: 0)
+        let bas = self.key(colonnesup: -1, rangersup: 0)
+        let gauche = self.key(colonnesup: 0, rangersup: -1)
+        let droit = self.key(colonnesup: 0, rangersup: 1)
+        
+        var mouvements = [mouvement]()
+        var attaque: Bool = false
+        
+        if let h = collectionIlot[haut] {
+            if h.contient == ilotContient.vide {
+                mouvements.append(mouvement.haut(h))
+            } else if h.contient == self.BatimentCible || h.contient == self.TypeInverse {
+                self.attaque(mouvement.haut(h))
+                attaque = true
+                return
+            } else {
+                self.derriereIMMO()
+            }
+        }
+        if let b = collectionIlot[bas] {
+            if b.contient == ilotContient.vide {
+                mouvements.append(mouvement.bas(b))
+            } else if b.contient == self.BatimentCible || b.contient == self.TypeInverse {
+                self.attaque(mouvement.bas(b))
+                attaque = true
+                return
+            } else {
+                self.devantIMMO()
+            }
+        }
+        if let g = collectionIlot[gauche] {
+            if g.contient == ilotContient.vide {
+                mouvements.append(mouvement.gauche(g))
+            } else if g.contient == self.BatimentCible || g.contient == self.TypeInverse {
+                self.attaque(mouvement.gauche(g))
+                attaque = true
+                return
+            } else {
+                if self.gauchiste == false {
+                    self.xScale = self.xScale * -1
+                    gauchiste = true
+                }
+                self.profilIMMO()
+            }
+        }
+        if let d = collectionIlot[droit] {
+            if d.contient == ilotContient.vide {
+                mouvements.append(mouvement.droit(d))
+            } else if d.contient == self.BatimentCible || d.contient == self.TypeInverse {
+                self.attaque(mouvement.droit(d))
+                attaque = true
+                return
+            } else {
+                if self.gauchiste == true {
+                    self.xScale = self.xScale * -1
+                    gauchiste = false
+                }
+                self.profilIMMO()
+            }
+        }
+        
+        if mouvements.count == 0 || attaque == true {
+            return // break mother fuck us !
+        }
+        
+        let jevaisoumaintenant = Int(arc4random_uniform(UInt32(mouvements.count)))
+        self.vider()
+        self.sedeplacer(mouvements[jevaisoumaintenant])
+        
+    }
+    
+    private func sedeplacer(movement: mouvement) {
+        self.removeActionForKey(action)
+        func deplacer(point: CGPoint, textures: [SKTexture]) {
+            let pointReel = CGPoint(x: point.x, y: point.y + 75)
+            if !self.useAutoResize {
+            self.runAction(SKAction.group([
+                SKAction.animateWithTextures(textures, timePerFrame: 0.1),
+                SKAction.moveTo(pointReel, duration: 1)
+                ]))
+            } else {
+            self.runAction(SKAction.group([
+                SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false),
+                SKAction.moveTo(pointReel, duration: 1)
+                ]))
+            }
+            
+        }
+        
+        switch movement {
+        case .bas(let b):
+            deplacer(b.ilotReferance.position, textures: self.t_devant)
+            self.reculerColonne()
+        case .droit(let d):
+            deplacer(d.ilotReferance.position, textures: self.t_profil)
+            if self.gauchiste == true {
+                self.xScale = self.xScale * -1
+                gauchiste = false
+            }
+            self.avancerRanger()
+        case .gauche(let g):
+            deplacer(g.ilotReferance.position, textures: self.t_profil)
+            if self.gauchiste == false {
+                self.xScale = self.xScale * -1
+                gauchiste = true
+            }
+            self.reculerRanger()
+        case .haut(let h):
+            deplacer(h.ilotReferance.position, textures: self.t_derrier)
+            self.avancerColonne()
+        }
+        
+        
+    }
+    
+    private func attaque(movement: mouvement) {
+        
+        information.son_hero_attaque()
+        switch movement {
+        case .bas(let b):
+            self.devantATK()
+            self.projectile(self.heroType, cible: b)
+        case .droit(let d):
+            self.profilATK()
+            if self.gauchiste == true {
+                self.xScale = self.xScale * -1
+                gauchiste = false
+            }
+            self.projectile(self.heroType, cible: d)
+        case .gauche(let g):
+            self.profilATK()
+            if self.gauchiste == false {
+                self.xScale = self.xScale * -1
+                gauchiste = true
+            }
+            self.projectile(self.heroType, cible: g)
+        case .haut(let h):
+            self.derriereATK()
+            self.projectile(self.heroType, cible: h)
+        }
+        
+    }
+    // fin de reflexion ================
     private func projectile(heroType: hero, cible: ilotInfo) {
         
         func point() -> CGPoint {
@@ -296,6 +505,36 @@ class heroSprite: SKSpriteNode {
                     eclat.removeFromParent()
                 })
                 ]))
+        case .roiFantome:
+            let projectile = SKSpriteNode(texture: textures.eclatBleu[0])
+            projectile.position = self.position
+            projectile.position.y += 20
+            projectile.runAction(SKAction.rotateToAngle(CGFloat(M_PI*10), duration: 1))
+            projectile.size = CGSize(width: 50, height: 50)
+            projectile.alpha = 0.9
+            information.AnimationNode?.addChild(projectile)
+            projectile.runAction(SKAction.moveTo(positionFinal, duration: 0.6))
+            projectile.zPosition = self.zPosition - 1
+            let eclat = SKSpriteNode(texture: textures.anim_vladBim[0])
+            eclat.zPosition = self.zPosition + 2
+            eclat.hidden = true
+            eclat.size = CGSize(width: 80, height: 80)
+            information.AnimationNode?.runAction(SKAction.sequence([
+                SKAction.waitForDuration(0.6),
+                SKAction.runBlock({
+                    projectile.removeFromParent()
+                    information.AnimationNode?.addChild(eclat)
+                    eclat.position = positionFinal
+                    eclat.runAction(SKAction.animateWithTextures(textures.eclatBleu, timePerFrame: 0.1, resize: true, restore: false))
+                    information.son_roiFantomeChoc()
+                    eclat.hidden = false
+                }),
+                SKAction.waitForDuration(0.5),
+                SKAction.runBlock({
+                    eclat.removeFromParent()
+                })
+                ]))
+
         default:
             break
         }
@@ -327,16 +566,24 @@ class heroSprite: SKSpriteNode {
     
     
 }
-
+// hero ==============================================================================
 class mageSpirituel: heroSprite {
     
     
     
-    let action: String
-    var gauchiste: Bool = true
     init() {
-        action = String(NSUUID.init())
         super.init(texture: textures.mage_devant[0], color: UIColor.cyanColor(), size: CGSize(width: information.solwidth/3, height: information.solwidth/3))
+        self.t_devant = textures.mage_devant
+        self.t_profil = textures.mage_profil
+        self.t_derrier = textures.mage_derriere
+        self.t_devantATK = textures.mage_devant_atk
+        self.t_profilATK = textures.mage_profil_atk
+        self.t_derrierATK = textures.mage_derriere_atk
+        self.t_profilIMO  = textures.mage_profil_im
+        self.t_derrierIMO = textures.mage_derriere_im
+        self.t_devantIMO = textures.mage_devant_im
+        self.heroType = hero.mage
+        self.action = String(NSUUID.init())
         self.zPosition = 200
         self.devantIMMO()
         self.pv = 250
@@ -351,196 +598,26 @@ class mageSpirituel: heroSprite {
     deinit { }
     
     
-    func devant() {
-        animer(textures.mage_devant)
-    }
-    func derriere() {
-        animer(textures.mage_derriere)
-    }
-    func profil() {
-        animer(textures.mage_profil)
-    }
-    func devantIMMO() {
-        animerNR(textures.mage_devant_im)
-    }
-    func derriereIMMO() {
-        animerNR(textures.mage_derriere_im)
-    }
-    func profilIMMO() {
-        animerNR(textures.mage_profil_im)
-    }
-    func devantATK() {
-        animer(textures.mage_devant_atk)
-    }
-    func derriereATK() {
-        animer(textures.mage_derriere_atk)
-    }
-    func profilATK() {
-        animer(textures.mage_profil_atk)
-    }
     
-    
-    private func animer(textures: [SKTexture]) {
-        self.removeActionForKey(action)
-        self.runAction(SKAction.animateWithTextures(textures, timePerFrame: 0.1), withKey: action)
-       
-    }
-    private func animerNR(textures: [SKTexture]) {
-        self.removeActionForKey(action)
-        self.runAction(SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: 0.1)), withKey: action)
-        
-    }
-
-    
-    func reflexion() {
-        
-        let haut = self.key(colonnesup: 1, rangersup: 0)
-        let bas = self.key(colonnesup: -1, rangersup: 0)
-        let gauche = self.key(colonnesup: 0, rangersup: -1)
-        let droit = self.key(colonnesup: 0, rangersup: 1)
-        
-        var mouvements = [mouvement]()
-        var attaque: Bool = false
-        
-        if let h = collectionIlot[haut] {
-            if h.contient == ilotContient.vide {
-           mouvements.append(mouvement.haut(h))
-            } else if h.contient == self.BatimentCible || h.contient == self.TypeInverse {
-           self.attaque(mouvement.haut(h))
-                attaque = true
-                return
-            } else {
-               self.derriereIMMO()
-            }
-        }
-        if let b = collectionIlot[bas] {
-            if b.contient == ilotContient.vide {
-           mouvements.append(mouvement.bas(b))
-            } else if b.contient == self.BatimentCible || b.contient == self.TypeInverse {
-           self.attaque(mouvement.bas(b))
-                attaque = true
-                return
-            } else {
-                self.devantIMMO()
-            }
-        }
-        if let g = collectionIlot[gauche] {
-            if g.contient == ilotContient.vide {
-           mouvements.append(mouvement.gauche(g))
-            } else if g.contient == self.BatimentCible || g.contient == self.TypeInverse {
-           self.attaque(mouvement.gauche(g))
-                attaque = true
-                return
-            } else {
-                if self.gauchiste == false {
-                    self.xScale = self.xScale * -1
-                    gauchiste = true
-                }
-                self.profilIMMO()
-            }
-        }
-        if let d = collectionIlot[droit] {
-            if d.contient == ilotContient.vide {
-           mouvements.append(mouvement.droit(d))
-            } else if d.contient == self.BatimentCible || d.contient == self.TypeInverse {
-           self.attaque(mouvement.droit(d))
-                attaque = true
-                return
-            } else {
-                if self.gauchiste == true {
-                    self.xScale = self.xScale * -1
-                    gauchiste = false
-                }
-                self.profilIMMO()
-            }
-        }
-        
-        if mouvements.count == 0 || attaque == true {
-            return // break mother fuck us !
-        }
-        
-        let jevaisoumaintenant = Int(arc4random_uniform(UInt32(mouvements.count)))
-        self.vider()
-        self.sedeplacer(mouvements[jevaisoumaintenant])
-        
-    }
-    
-    private func sedeplacer(movement: mouvement) {
-        self.removeActionForKey(action)
-        func deplacer(point: CGPoint, textures: [SKTexture]) {
-            let pointReel = CGPoint(x: point.x, y: point.y + 75)
-            self.runAction(SKAction.group([
-                SKAction.animateWithTextures(textures, timePerFrame: 0.1),
-                SKAction.moveTo(pointReel, duration: 1)
-                ]))
-            
-        }
-        
-        switch movement {
-        case .bas(let b):
-            deplacer(b.ilotReferance.position, textures: textures.mage_devant)
-            self.reculerColonne()
-        case .droit(let d):
-            deplacer(d.ilotReferance.position, textures: textures.mage_profil)
-            if self.gauchiste == true {
-                self.xScale = self.xScale * -1
-                gauchiste = false
-            }
-            self.avancerRanger()
-        case .gauche(let g):
-            deplacer(g.ilotReferance.position, textures: textures.mage_profil)
-            if self.gauchiste == false {
-                self.xScale = self.xScale * -1
-                gauchiste = true
-            }
-            self.reculerRanger()
-        case .haut(let h):
-            deplacer(h.ilotReferance.position, textures: textures.mage_derriere)
-            self.avancerColonne()
-        }
-        
-        
-    }
-    
-    private func attaque(movement: mouvement) {
-     
-        information.son_hero_attaque()
-        switch movement {
-        case .bas(let b):
-            self.devantATK()
-            self.projectile(hero.mage, cible: b)
-        case .droit(let d):
-            self.profilATK()
-            if self.gauchiste == true {
-                self.xScale = self.xScale * -1
-                gauchiste = false
-            }
-            self.projectile(hero.mage, cible: d)
-        case .gauche(let g):
-            self.profilATK()
-            if self.gauchiste == false {
-                self.xScale = self.xScale * -1
-                gauchiste = true
-            }
-            self.projectile(hero.mage, cible: g)
-        case .haut(let h):
-            self.derriereATK()
-            self.projectile(hero.mage, cible: h)
-        }
-        
-    }
     
 }
 
 
 class demoniste: heroSprite { // demoniste
     
-    
-    let action: String
-    var gauchiste: Bool = true
     init() {
+        super.init(texture: textures.mage_devant[0], color: UIColor.cyanColor(), size: CGSize(width: information.solwidth/2, height: information.solwidth*0.75))
         action = String(NSUUID.init())
-        super.init(texture: textures.mage_devant[0], color: UIColor.cyanColor(), size: CGSize(width: information.solwidth/2, height: information.solwidth*0.65))
+        self.t_devant = textures.demo_devant
+        self.t_profil = textures.demo_profil
+        self.t_derrier = textures.demo_derriere
+        self.t_devantATK = textures.demo_devant_atk
+        self.t_profilATK = textures.demo_profil_atk
+        self.t_derrierATK = textures.demo_derriere_atk
+        self.t_profilIMO  = textures.demo_profil_im
+        self.t_derrierIMO = textures.demo_derriere_im
+        self.t_devantIMO = textures.demo_devant_im
+        self.heroType = hero.demoniste
         self.zPosition = 200
         self.devantIMMO()
         self.pv = 750
@@ -556,194 +633,26 @@ class demoniste: heroSprite { // demoniste
     deinit { }
     
     
-    func devant() {
-        animer(textures.demo_devant)
-    }
-    func derriere() {
-        animer(textures.demo_derriere)
-    }
-    func profil() {
-        animer(textures.demo_profil)
-    }
-    func devantIMMO() {
-        animerNR(textures.demo_devant_im)
-    }
-    func derriereIMMO() {
-        animerNR(textures.demo_derriere_im)
-    }
-    func profilIMMO() {
-        animerNR(textures.demo_profil_im)
-    }
-    func devantATK() {
-        animer(textures.demo_devant_atk)
-    }
-    func derriereATK() {
-        animer(textures.demo_derriere_atk)
-    }
-    func profilATK() {
-        animer(textures.demo_profil_atk)
-    }
-    
-    
-    private func animer(textures: [SKTexture]) {
-        self.removeActionForKey(action)
-        self.runAction(SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false), withKey: action)
-    }
-    private func animerNR(textures: [SKTexture]) {
-        self.removeActionForKey(action)
-        self.runAction(SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false)), withKey: action)
-    }
-    
-    
-    func reflexion() {
-        
-        let haut = self.key(colonnesup: 1, rangersup: 0)
-        let bas = self.key(colonnesup: -1, rangersup: 0)
-        let gauche = self.key(colonnesup: 0, rangersup: -1)
-        let droit = self.key(colonnesup: 0, rangersup: 1)
-        
-        var mouvements = [mouvement]()
-        var attaque: Bool = false
-        
-        if let h = collectionIlot[haut] {
-            if h.contient == ilotContient.vide {
-                mouvements.append(mouvement.haut(h))
-            } else if h.contient == self.BatimentCible || h.contient == self.TypeInverse {
-                self.attaque(mouvement.haut(h))
-                attaque = true
-                return
-            } else {
-                self.derriereIMMO()
-            }
-        }
-        if let b = collectionIlot[bas] {
-            if b.contient == ilotContient.vide {
-                mouvements.append(mouvement.bas(b))
-            } else if b.contient == self.BatimentCible || b.contient == self.TypeInverse {
-                self.attaque(mouvement.bas(b))
-                attaque = true
-                return
-            } else {
-                self.devantIMMO()
-            }
-        }
-        if let g = collectionIlot[gauche] {
-            if g.contient == ilotContient.vide {
-                mouvements.append(mouvement.gauche(g))
-            } else if g.contient == self.BatimentCible || g.contient == self.TypeInverse {
-                self.attaque(mouvement.gauche(g))
-                attaque = true
-                return
-            } else {
-                if self.gauchiste == false {
-                    self.xScale = self.xScale * -1
-                    gauchiste = true
-                }
-                self.profilIMMO()
-            }
-        }
-        if let d = collectionIlot[droit] {
-            if d.contient == ilotContient.vide {
-                mouvements.append(mouvement.droit(d))
-            } else if d.contient == self.BatimentCible || d.contient == self.TypeInverse {
-                self.attaque(mouvement.droit(d))
-                attaque = true
-                return
-            } else {
-                if self.gauchiste == true {
-                    self.xScale = self.xScale * -1
-                    gauchiste = false
-                }
-                self.profilIMMO()
-            }
-        }
-        
-        if mouvements.count == 0 || attaque == true {
-            return // break mother fuck us !
-        }
-        
-        let jevaisoumaintenant = Int(arc4random_uniform(UInt32(mouvements.count)))
-        self.vider()
-        self.sedeplacer(mouvements[jevaisoumaintenant])
-        
-        
-    }
-    
-    private func sedeplacer(movement: mouvement) {
-        self.removeActionForKey(action)
-        func deplacer(point: CGPoint, textures: [SKTexture]) {
-            let pointReel = CGPoint(x: point.x, y: point.y + 75)
-            self.runAction(SKAction.group([
-                SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false),
-                SKAction.moveTo(pointReel, duration: 1)
-                ]))
-            
-        }
-        
-        switch movement {
-        case .bas(let b):
-            deplacer(b.ilotReferance.position, textures: textures.demo_devant)
-            self.reculerColonne()
-        case .droit(let d):
-            deplacer(d.ilotReferance.position, textures: textures.demo_profil)
-            if self.gauchiste == true {
-                self.xScale = self.xScale * -1
-                gauchiste = false
-            }
-            self.avancerRanger()
-        case .gauche(let g):
-            deplacer(g.ilotReferance.position, textures: textures.demo_profil)
-            if self.gauchiste == false {
-                self.xScale = self.xScale * -1
-                gauchiste = true
-            }
-            self.reculerRanger()
-        case .haut(let h):
-            deplacer(h.ilotReferance.position, textures: textures.demo_derriere)
-            self.avancerColonne()
-        }
-        
-    }
-    
-    private func attaque(movement: mouvement) {
-        information.son_hero_attaque()
-        switch movement {
-        case .bas(let b):
-            self.devantATK()
-            self.projectile(hero.demoniste, cible: b)
-        case .droit(let d):
-            self.profilATK()
-            if self.gauchiste == true {
-                self.xScale = self.xScale * -1
-                gauchiste = false
-            }
-            self.projectile(hero.demoniste, cible: d)
-        case .gauche(let g):
-            self.profilATK()
-            if self.gauchiste == false {
-                self.xScale = self.xScale * -1
-                gauchiste = true
-            }
-            self.projectile(hero.demoniste, cible: g)
-        case .haut(let h):
-            self.derriereATK()
-            self.projectile(hero.demoniste, cible: h)
-        }
-
-        
-    }
     
     
 }
 
 class moltanica: heroSprite { // moltanica
     
-    
-    let action: String
-    var gauchiste: Bool = true
     init() {
+        super.init(texture: textures.molta_devant[0], color: UIColor.cyanColor(), size: CGSize(width: information.solwidth*1.5, height: information.solwidth*1.5))
         action = String(NSUUID.init())
-        super.init(texture: textures.molta_devant[0], color: UIColor.cyanColor(), size: CGSize(width: information.solwidth*1.1, height: information.solwidth*0.8))
+        self.useAutoResize = true
+        self.t_devant = textures.molta_devant
+        self.t_profil = textures.molta_profil
+        self.t_derrier = textures.molta_derriere
+        self.t_devantATK = textures.molta_devant_atk
+        self.t_profilATK = textures.molta_profil_atk
+        self.t_derrierATK = textures.molta_derriere_atk
+        self.t_profilIMO  = textures.molta_profil_im
+        self.t_derrierIMO = textures.molta_derriere_im
+        self.t_devantIMO = textures.molta_devant_im
+        self.heroType = hero.moltanica
         self.zPosition = 200
         self.devantIMMO()
         self.pv = 1700
@@ -759,184 +668,6 @@ class moltanica: heroSprite { // moltanica
     deinit { }
     
     
-    func devant() {
-        animer(textures.molta_devant)
-    }
-    func derriere() {
-        animer(textures.molta_derriere)
-    }
-    func profil() {
-        animer(textures.molta_profil)
-    }
-    func devantIMMO() {
-        animerNR(textures.molta_devant_im)
-    }
-    func derriereIMMO() {
-        animerNR(textures.molta_derriere_im)
-    }
-    func profilIMMO() {
-        animerNR(textures.molta_profil_im)
-    }
-    func devantATK() {
-        animer(textures.molta_devant_atk)
-    }
-    func derriereATK() {
-        animer(textures.molta_derriere_atk)
-    }
-    func profilATK() {
-        animer(textures.molta_profil_atk)
-    }
-    
-    
-    private func animer(textures: [SKTexture]) {
-        self.removeActionForKey(action)
-        self.runAction(SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false), withKey: action)
-    }
-    private func animerNR(textures: [SKTexture]) {
-        self.removeActionForKey(action)
-        self.runAction(SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false)), withKey: action)
-    }
-    
-    
-    func reflexion() {
-        
-        let haut = self.key(colonnesup: 1, rangersup: 0)
-        let bas = self.key(colonnesup: -1, rangersup: 0)
-        let gauche = self.key(colonnesup: 0, rangersup: -1)
-        let droit = self.key(colonnesup: 0, rangersup: 1)
-        
-        var mouvements = [mouvement]()
-        var attaque: Bool = false
-        
-        if let h = collectionIlot[haut] {
-            if h.contient == ilotContient.vide {
-                mouvements.append(mouvement.haut(h))
-            } else if h.contient == self.BatimentCible || h.contient == self.TypeInverse {
-                self.attaque(mouvement.haut(h))
-                attaque = true
-                return
-            } else {
-                self.derriereIMMO()
-            }
-        }
-        if let b = collectionIlot[bas] {
-            if b.contient == ilotContient.vide {
-                mouvements.append(mouvement.bas(b))
-            } else if b.contient == self.BatimentCible || b.contient == self.TypeInverse {
-                self.attaque(mouvement.bas(b))
-                attaque = true
-                return
-            } else {
-                self.devantIMMO()
-            }
-        }
-        if let g = collectionIlot[gauche] {
-            if g.contient == ilotContient.vide {
-                mouvements.append(mouvement.gauche(g))
-            } else if g.contient == self.BatimentCible || g.contient == self.TypeInverse {
-                self.attaque(mouvement.gauche(g))
-                attaque = true
-                return
-            } else {
-                if self.gauchiste == false {
-                    self.xScale = self.xScale * -1
-                    gauchiste = true
-                }
-                self.profilIMMO()
-            }
-        }
-        if let d = collectionIlot[droit] {
-            if d.contient == ilotContient.vide {
-                mouvements.append(mouvement.droit(d))
-            } else if d.contient == self.BatimentCible || d.contient == self.TypeInverse {
-                self.attaque(mouvement.droit(d))
-                attaque = true
-                return
-            } else {
-                if self.gauchiste == true {
-                    self.xScale = self.xScale * -1
-                    gauchiste = false
-                }
-                self.profilIMMO()
-            }
-        }
-        
-        if mouvements.count == 0 || attaque == true {
-            return // break mother fuck us !
-        }
-        
-        let jevaisoumaintenant = Int(arc4random_uniform(UInt32(mouvements.count)))
-        self.vider()
-        self.sedeplacer(mouvements[jevaisoumaintenant])
-        
-        
-    }
-    
-    private func sedeplacer(movement: mouvement) {
-        self.removeActionForKey(action)
-        func deplacer(point: CGPoint, textures: [SKTexture]) {
-            let pointReel = CGPoint(x: point.x, y: point.y + 75)
-            self.runAction(SKAction.group([
-                SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false),
-                SKAction.moveTo(pointReel, duration: 1)
-                ]))
-            
-        }
-        
-        switch movement {
-        case .bas(let b):
-            deplacer(b.ilotReferance.position, textures: textures.molta_devant)
-            self.reculerColonne()
-        case .droit(let d):
-            deplacer(d.ilotReferance.position, textures: textures.molta_profil)
-            if self.gauchiste == true {
-                self.xScale = self.xScale * -1
-                gauchiste = false
-            }
-            self.avancerRanger()
-        case .gauche(let g):
-            deplacer(g.ilotReferance.position, textures: textures.molta_profil)
-            if self.gauchiste == false {
-                self.xScale = self.xScale * -1
-                gauchiste = true
-            }
-            self.reculerRanger()
-        case .haut(let h):
-            deplacer(h.ilotReferance.position, textures: textures.molta_derriere)
-            self.avancerColonne()
-        }
-        
-    }
-    
-    private func attaque(movement: mouvement) {
-        
-        information.son_hero_attaque()
-        switch movement {
-        case .bas(let b):
-            self.devantATK()
-            self.projectile(hero.moltanica, cible: b)
-        case .droit(let d):
-            self.profilATK()
-            if self.gauchiste == true {
-                self.xScale = self.xScale * -1
-                gauchiste = false
-            }
-            self.projectile(hero.moltanica, cible: d)
-        case .gauche(let g):
-            self.profilATK()
-            if self.gauchiste == false {
-                self.xScale = self.xScale * -1
-                gauchiste = true
-            }
-            self.projectile(hero.moltanica, cible: g)
-        case .haut(let h):
-            self.derriereATK()
-            self.projectile(hero.moltanica, cible: h)
-        }
-
-        
-    }
-    
     
 }
 
@@ -944,11 +675,21 @@ class moltanica: heroSprite { // moltanica
 class vladDracula: heroSprite { // vlad dracula
     
     
-    let action: String
-    var gauchiste: Bool = true
     init() {
-        action = String(NSUUID.init())
+       
         super.init(texture: textures.vlad_devant[0], color: UIColor.cyanColor(), size: CGSize(width: information.solwidth, height: information.solwidth*0.7))
+        action = String(NSUUID.init())
+        self.useAutoResize = true
+        self.t_devant = textures.vlad_devant
+        self.t_profil = textures.vlad_profil
+        self.t_derrier = textures.vlad_derriere
+        self.t_devantATK = textures.vlad_devant_atk
+        self.t_profilATK = textures.vlad_profil_atk
+        self.t_derrierATK = textures.vlad_derriere_atk
+        self.t_profilIMO  = textures.vlad_profil_im
+        self.t_derrierIMO = textures.vlad_derriere_im
+        self.t_devantIMO = textures.vlad_devant_im
+        self.heroType = hero.vlad
         self.zPosition = 200
         self.devantIMMO()
         self.pv = 950
@@ -963,193 +704,136 @@ class vladDracula: heroSprite { // vlad dracula
     deinit { }
     
     
-    func devant() {
-        animer(textures.vlad_devant)
-    }
-    func derriere() {
-        animer(textures.vlad_derriere)
-    }
-    func profil() {
-        animer(textures.vlad_profil)
-    }
-    func devantIMMO() {
-        animerNR(textures.vlad_devant_im)
-    }
-    func derriereIMMO() {
-        animerNR(textures.vlad_derriere_im)
-    }
-    func profilIMMO() {
-        animerNR(textures.vlad_profil_im)
-    }
-    func devantATK() {
-        animer(textures.vlad_devant_atk)
-    }
-    func derriereATK() {
-        animer(textures.vlad_derriere_atk)
-    }
-    func profilATK() {
-        animer(textures.vlad_profil_atk)
-    }
+}
+
+class roiFantome: heroSprite { // roi fantome ==============================================================================================
     
     
-    private func animer(textures: [SKTexture]) {
-        self.removeActionForKey(action)
-        self.runAction(SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false), withKey: action)
-    }
-    private func animerNR(textures: [SKTexture]) {
-        self.removeActionForKey(action)
-        self.runAction(SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false)), withKey: action)
-    }
-    
-    
-    func reflexion() {
+    init() {
         
-        let haut = self.key(colonnesup: 1, rangersup: 0)
-        let bas = self.key(colonnesup: -1, rangersup: 0)
-        let gauche = self.key(colonnesup: 0, rangersup: -1)
-        let droit = self.key(colonnesup: 0, rangersup: 1)
-        
-        var mouvements = [mouvement]()
-        var attaque: Bool = false
-        
-        if let h = collectionIlot[haut] {
-            if h.contient == ilotContient.vide {
-                mouvements.append(mouvement.haut(h))
-            } else if h.contient == self.BatimentCible || h.contient == self.TypeInverse {
-                self.attaque(mouvement.haut(h))
-                attaque = true
-                return
-            } else {
-                self.derriereIMMO()
-            }
-        }
-        if let b = collectionIlot[bas] {
-            if b.contient == ilotContient.vide {
-                mouvements.append(mouvement.bas(b))
-            } else if b.contient == self.BatimentCible || b.contient == self.TypeInverse {
-                self.attaque(mouvement.bas(b))
-                attaque = true
-                return
-            } else {
-                self.devantIMMO()
-            }
-        }
-        if let g = collectionIlot[gauche] {
-            if g.contient == ilotContient.vide {
-                mouvements.append(mouvement.gauche(g))
-            } else if g.contient == self.BatimentCible || g.contient == self.TypeInverse {
-                self.attaque(mouvement.gauche(g))
-                attaque = true
-                return
-            } else {
-                if self.gauchiste == false {
-                    self.xScale = self.xScale * -1
-                    gauchiste = true
-                }
-                self.profilIMMO()
-            }
-        }
-        if let d = collectionIlot[droit] {
-            if d.contient == ilotContient.vide {
-                mouvements.append(mouvement.droit(d))
-            } else if d.contient == self.BatimentCible || d.contient == self.TypeInverse {
-                self.attaque(mouvement.droit(d))
-                attaque = true
-                return
-            } else {
-                if self.gauchiste == true {
-                    self.xScale = self.xScale * -1
-                    gauchiste = false
-                }
-                self.profilIMMO()
-            }
-        }
-        
-        if mouvements.count == 0 || attaque == true {
-            return // break mother fuck us !
-        }
-        
-        let jevaisoumaintenant = Int(arc4random_uniform(UInt32(mouvements.count)))
-        self.vider()
-        self.sedeplacer(mouvements[jevaisoumaintenant])
-        
-        
+        super.init(texture: textures.vlad_devant[0], color: UIColor.cyanColor(), size: CGSize(width: information.solwidth, height: information.solwidth))
+        action = String(NSUUID.init())
+        self.useAutoResize = true
+        self.t_devant = textures.roi_devant
+        self.t_profil = textures.roi_profil
+        self.t_derrier = textures.roi_derriere
+        self.t_devantATK = textures.roi_devant_atk
+        self.t_profilATK = textures.roi_profil_atk
+        self.t_derrierATK = textures.roi_derriere_atk
+        self.t_profilIMO  = textures.roi_profil_im
+        self.t_derrierIMO = textures.roi_derriere_im
+        self.t_devantIMO = textures.roi_devant_im
+        self.heroType = hero.roiFantome
+        self.zPosition = 200
+        self.devantIMMO()
+        self.pv = 800
+        self.degat = 200
+        self.initLabel()
+        self.flying = true
     }
     
-    private func sedeplacer(movement: mouvement) {
-        self.removeActionForKey(action)
-        func deplacer(point: CGPoint, textures: [SKTexture]) {
-            let pointReel = CGPoint(x: point.x, y: point.y + 75)
-            self.runAction(SKAction.group([
-                SKAction.animateWithTextures(textures, timePerFrame: 0.1, resize: true, restore: false),
-                SKAction.moveTo(pointReel, duration: 1)
-                ]))
-            
-        }
-        
-        switch movement {
-        case .bas(let b):
-            deplacer(b.ilotReferance.position, textures: textures.vlad_devant)
-            self.reculerColonne()
-        case .droit(let d):
-            deplacer(d.ilotReferance.position, textures: textures.vlad_profil)
-            if self.gauchiste == true {
-                self.xScale = self.xScale * -1
-                gauchiste = false
-            }
-            self.avancerRanger()
-        case .gauche(let g):
-            deplacer(g.ilotReferance.position, textures: textures.vlad_profil)
-            if self.gauchiste == false {
-                self.xScale = self.xScale * -1
-                gauchiste = true
-            }
-            self.reculerRanger()
-        case .haut(let h):
-            deplacer(h.ilotReferance.position, textures: textures.vlad_derriere)
-            self.avancerColonne()
-        }
-        
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-    
-    private func attaque(movement: mouvement) {
-        information.son_hero_attaque()
-        switch movement {
-        case .bas(let b):
-            self.devantATK()
-            self.projectile(hero.vlad, cible: b)
-        case .droit(let d):
-            self.profilATK()
-            if self.gauchiste == true {
-                self.xScale = self.xScale * -1
-                gauchiste = false
-            }
-            self.projectile(hero.vlad, cible: d)
-        case .gauche(let g):
-            self.profilATK()
-            if self.gauchiste == false {
-                self.xScale = self.xScale * -1
-                gauchiste = true
-            }
-            self.projectile(hero.vlad, cible: g)
-        case .haut(let h):
-            self.derriereATK()
-            self.projectile(hero.vlad, cible: h)
-        }
-        
-    }
-    
-    
+    deinit { }
 }
 
 
+class grimfield: heroSprite { // diaboluc ==============================================================================================
+    
+    
+    init() {
+        
+        super.init(texture: textures.vlad_devant[0], color: UIColor.cyanColor(), size: CGSize(width: information.solwidth, height: information.solwidth))
+        action = String(NSUUID.init())
+        self.useAutoResize = true
+        self.t_devant = textures.grim_devant
+        self.t_profil = textures.grim_profil
+        self.t_derrier = textures.grim_derriere
+        self.t_devantATK = textures.grim_devant_atk
+        self.t_profilATK = textures.grim_profil_atk
+        self.t_derrierATK = textures.grim_derriere_atk
+        self.t_profilIMO  = textures.grim_profil_im
+        self.t_derrierIMO = textures.grim_derriere_im
+        self.t_devantIMO = textures.grim_devant_im
+        self.heroType = hero.grimfield
+        self.zPosition = 200
+        self.devantIMMO()
+        self.pv = 1000
+        self.degat = 220
+        self.initLabel()
+        self.flying = false
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    deinit { }
+}
 
+class sirenia: heroSprite { // sirenia ==============================================================================================
+    
+    
+    init() {
+        
+        super.init(texture: textures.vlad_devant[0], color: UIColor.cyanColor(), size: CGSize(width: information.solwidth, height: information.solwidth))
+        action = String(NSUUID.init())
+        self.useAutoResize = true
+        self.t_devant = textures.sire_devant
+        self.t_profil = textures.sire_profil
+        self.t_derrier = textures.sire_derriere
+        self.t_devantATK = textures.sire_devant_atk
+        self.t_profilATK = textures.sire_profil_atk
+        self.t_derrierATK = textures.sire_derriere_atk
+        self.t_profilIMO  = textures.sire_profil_im
+        self.t_derrierIMO = textures.sire_derriere_im
+        self.t_devantIMO = textures.sire_devant_im
+        self.heroType = hero.sirenia
+        self.zPosition = 200
+        self.devantIMMO()
+        self.pv = 900
+        self.degat = 100
+        self.initLabel()
+        self.flying = false
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    deinit { }
+}
 
-
-
-
-
-
+class Harpie: heroSprite { // reine harpie ==============================================================================================
+    
+    
+    init() {
+        
+        super.init(texture: textures.vlad_devant[0], color: UIColor.cyanColor(), size: CGSize(width: information.solwidth*0.85, height: information.solwidth*0.85))
+        action = String(NSUUID.init())
+        self.useAutoResize = true
+        self.t_devant = textures.harpie_devant
+        self.t_profil = textures.harpie_profil
+        self.t_derrier = textures.harpie_derriere
+        self.t_devantATK = textures.harpie_devant_atk
+        self.t_profilATK = textures.harpie_profil_atk
+        self.t_derrierATK = textures.harpie_derriere_atk
+        self.t_profilIMO  = textures.harpie_profil_im
+        self.t_derrierIMO = textures.harpie_derriere_im
+        self.t_devantIMO = textures.harpie_devant_im
+        self.heroType = hero.harpie
+        self.zPosition = 200
+        self.devantIMMO()
+        self.pv = 600
+        self.degat = 175
+        self.initLabel()
+        self.flying = true 
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    deinit { }
+}
 
 
 

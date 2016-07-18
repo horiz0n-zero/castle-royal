@@ -25,6 +25,10 @@ struct textures {
     static let carteMoltanica = SKTexture(imageNamed: "item0225")
     static let carteDuc = SKTexture(imageNamed: "item0213")
     static let carteVlad = SKTexture(imageNamed: "item0266")
+    static let carteRoiFantome = SKTexture(imageNamed: "item0396")
+    static let carteGrimfield = SKTexture(imageNamed: "item0399")
+    static let carteReineHarpie = SKTexture(imageNamed: "item0381")
+    static let carteSirenia = SKTexture(imageNamed: "item0288")
     
     static let haloViolet = SKTexture(imageNamed: "haloViolet")
     static let haloVert = SKTexture(imageNamed: "haloVert")
@@ -83,6 +87,14 @@ struct textures {
     SKTexture(imageNamed: "vladBim6")
     ]
     static let anim_vlad_projectile = SKTexture(imageNamed: "vladEclat")
+    
+    static let eclatBleu = [
+    SKTexture(imageNamed: "cristalBBim1"),
+    SKTexture(imageNamed: "cristalBBim2"),
+    SKTexture(imageNamed: "cristalBBim3"),
+    SKTexture(imageNamed: "cristalBBim4"),
+    SKTexture(imageNamed: "cristalBBim5")
+    ]
 
     
     // mage
@@ -611,7 +623,398 @@ struct textures {
         SKTexture(imageNamed: "v119"),
         SKTexture(imageNamed: "v120"),
     ]
+    
+    // roi des fantomes 
+    //
+    
+    static let roi_devant_im = [
+        SKTexture(imageNamed: "f1"),
+        SKTexture(imageNamed: "f2"),
+        SKTexture(imageNamed: "f3"),
+        SKTexture(imageNamed: "f4"),
+        SKTexture(imageNamed: "f5"),
+        SKTexture(imageNamed: "f6"),
+        SKTexture(imageNamed: "f7"),
+        SKTexture(imageNamed: "f8")
+    ]
+    
+    static let roi_profil_im = [
+        SKTexture(imageNamed: "f9"),
+        SKTexture(imageNamed: "f10"),
+        SKTexture(imageNamed: "f11"),
+        SKTexture(imageNamed: "f12"),
+        SKTexture(imageNamed: "f13"),
+        SKTexture(imageNamed: "f14"),
+        SKTexture(imageNamed: "f15"),
+        SKTexture(imageNamed: "f16")
+    ]
+    static let roi_derriere_im = [
+        SKTexture(imageNamed: "f17"),
+        SKTexture(imageNamed: "f18"),
+        SKTexture(imageNamed: "f19"),
+        SKTexture(imageNamed: "f20"),
+        SKTexture(imageNamed: "f21"),
+        SKTexture(imageNamed: "f22"),
+        SKTexture(imageNamed: "f23"),
+        SKTexture(imageNamed: "f24")
+        
+    ]
+    // immobile
+    static let roi_devant = [
+        SKTexture(imageNamed: "f25"),
+        SKTexture(imageNamed: "f26"),
+        SKTexture(imageNamed: "f27"),
+        SKTexture(imageNamed: "f28"),
+        SKTexture(imageNamed: "f29"),
+        SKTexture(imageNamed: "f30"),
+        SKTexture(imageNamed: "f31"),
+        SKTexture(imageNamed: "f32")
+        
+    ]
+    static let roi_profil = [
+        SKTexture(imageNamed: "f33"),
+        SKTexture(imageNamed: "f34"),
+        SKTexture(imageNamed: "f35"),
+        SKTexture(imageNamed: "f36"),
+        SKTexture(imageNamed: "f37"),
+        SKTexture(imageNamed: "f38"),
+        SKTexture(imageNamed: "f39"),
+        SKTexture(imageNamed: "f40")
+        
+    ]
+    static let roi_derriere = [
+        SKTexture(imageNamed: "f41"),
+        SKTexture(imageNamed: "f42"),
+        SKTexture(imageNamed: "f43"),
+        SKTexture(imageNamed: "f44"),
+        SKTexture(imageNamed: "f45"),
+        SKTexture(imageNamed: "f46"),
+        SKTexture(imageNamed: "f47"),
+        SKTexture(imageNamed: "f48")
+        
+    ]
+    // attaque :
+    static let roi_devant_atk = [
+        SKTexture(imageNamed: "f49"),
+        SKTexture(imageNamed: "f50"),
+        SKTexture(imageNamed: "f51"),
+        SKTexture(imageNamed: "f52"),
+        SKTexture(imageNamed: "f53"),
+        SKTexture(imageNamed: "f54"),
+        SKTexture(imageNamed: "f55"),
+    ]
+    static let roi_profil_atk = [
+        SKTexture(imageNamed: "f56"),
+        SKTexture(imageNamed: "f57"),
+        SKTexture(imageNamed: "f58"),
+        SKTexture(imageNamed: "f59"),
+        SKTexture(imageNamed: "f60"),
+        SKTexture(imageNamed: "f61"),
+        SKTexture(imageNamed: "f62")
+    ]
+    static let roi_derriere_atk = [
+        SKTexture(imageNamed: "f63"),
+        SKTexture(imageNamed: "f64"),
+        SKTexture(imageNamed: "f65"),
+        SKTexture(imageNamed: "f66"),
+        SKTexture(imageNamed: "f67"),
+        SKTexture(imageNamed: "f68"),
+        SKTexture(imageNamed: "f69"),
+        ]
+    
 
+    // grimfield
+    
+    static let grim_devant_im = [
+        SKTexture(imageNamed: "g1"),
+        SKTexture(imageNamed: "g2"),
+        SKTexture(imageNamed: "g3"),
+        SKTexture(imageNamed: "g4"),
+        SKTexture(imageNamed: "g5"),
+        SKTexture(imageNamed: "g6"),
+        SKTexture(imageNamed: "g7"),
+        SKTexture(imageNamed: "g8")
+    ]
+    
+    static let grim_profil_im = [
+        SKTexture(imageNamed: "g9"),
+        SKTexture(imageNamed: "g10"),
+        SKTexture(imageNamed: "g11"),
+        SKTexture(imageNamed: "g12"),
+        SKTexture(imageNamed: "g13"),
+        SKTexture(imageNamed: "g14"),
+        SKTexture(imageNamed: "g15"),
+        SKTexture(imageNamed: "g16")
+    ]
+    static let grim_derriere_im = [
+        SKTexture(imageNamed: "g17"),
+        SKTexture(imageNamed: "g18"),
+        SKTexture(imageNamed: "g19"),
+        SKTexture(imageNamed: "g20"),
+        SKTexture(imageNamed: "g21"),
+        SKTexture(imageNamed: "g22"),
+        SKTexture(imageNamed: "g23"),
+        SKTexture(imageNamed: "g24")
+        
+    ]
+    // immobile
+    static let grim_devant = [
+        SKTexture(imageNamed: "g25"),
+        SKTexture(imageNamed: "g26"),
+        SKTexture(imageNamed: "g27"),
+        SKTexture(imageNamed: "g28"),
+        SKTexture(imageNamed: "g29"),
+        SKTexture(imageNamed: "g30"),
+        SKTexture(imageNamed: "g31"),
+        SKTexture(imageNamed: "g32")
+        
+    ]
+    static let grim_profil = [
+        SKTexture(imageNamed: "g33"),
+        SKTexture(imageNamed: "g34"),
+        SKTexture(imageNamed: "g35"),
+        SKTexture(imageNamed: "g36"),
+        SKTexture(imageNamed: "g37"),
+        SKTexture(imageNamed: "g38"),
+        SKTexture(imageNamed: "g39"),
+        SKTexture(imageNamed: "g40")
+        
+    ]
+    static let grim_derriere = [
+        SKTexture(imageNamed: "g41"),
+        SKTexture(imageNamed: "g42"),
+        SKTexture(imageNamed: "g43"),
+        SKTexture(imageNamed: "g44"),
+        SKTexture(imageNamed: "g45"),
+        SKTexture(imageNamed: "g46"),
+        SKTexture(imageNamed: "g47"),
+        SKTexture(imageNamed: "g48")
+        
+    ]
+    // attaque :
+    static let grim_devant_atk = [
+        SKTexture(imageNamed: "g49"),
+        SKTexture(imageNamed: "g50"),
+        SKTexture(imageNamed: "g51"),
+        SKTexture(imageNamed: "g52"),
+        SKTexture(imageNamed: "g53"),
+        SKTexture(imageNamed: "g54"),
+        SKTexture(imageNamed: "g55"),
+        ]
+    static let grim_profil_atk = [
+        SKTexture(imageNamed: "g56"),
+        SKTexture(imageNamed: "g57"),
+        SKTexture(imageNamed: "g58"),
+        SKTexture(imageNamed: "g59"),
+        SKTexture(imageNamed: "g60"),
+        SKTexture(imageNamed: "g61"),
+        SKTexture(imageNamed: "g62")
+    ]
+    static let grim_derriere_atk = [
+        SKTexture(imageNamed: "g63"),
+        SKTexture(imageNamed: "g64"),
+        SKTexture(imageNamed: "g65"),
+        SKTexture(imageNamed: "g66"),
+        SKTexture(imageNamed: "g67"),
+        SKTexture(imageNamed: "g68"),
+        SKTexture(imageNamed: "g69"),
+        ]
+    
+    
+    // reine harpie ================
+    
+    static let harpie_devant_im = [
+        SKTexture(imageNamed: "h1"),
+        SKTexture(imageNamed: "h2"),
+        SKTexture(imageNamed: "h3"),
+        SKTexture(imageNamed: "h4"),
+        SKTexture(imageNamed: "h5"),
+        SKTexture(imageNamed: "h6"),
+        SKTexture(imageNamed: "h7"),
+        SKTexture(imageNamed: "h8")
+    ]
+    
+    static let harpie_profil_im = [
+        SKTexture(imageNamed: "h9"),
+        SKTexture(imageNamed: "h10"),
+        SKTexture(imageNamed: "h11"),
+        SKTexture(imageNamed: "h12"),
+        SKTexture(imageNamed: "h13"),
+        SKTexture(imageNamed: "h14"),
+        SKTexture(imageNamed: "h15"),
+        SKTexture(imageNamed: "h16")
+    ]
+    static let harpie_derriere_im = [
+        SKTexture(imageNamed: "h17"),
+        SKTexture(imageNamed: "h18"),
+        SKTexture(imageNamed: "h19"),
+        SKTexture(imageNamed: "h20"),
+        SKTexture(imageNamed: "h21"),
+        SKTexture(imageNamed: "h22"),
+        SKTexture(imageNamed: "h23"),
+        SKTexture(imageNamed: "h24")
+        
+    ]
+    // immobile
+    static let harpie_devant = [
+        SKTexture(imageNamed: "h25"),
+        SKTexture(imageNamed: "h26"),
+        SKTexture(imageNamed: "h27"),
+        SKTexture(imageNamed: "h28"),
+        SKTexture(imageNamed: "h29"),
+        SKTexture(imageNamed: "h30"),
+        SKTexture(imageNamed: "h31"),
+        SKTexture(imageNamed: "h32")
+        
+    ]
+    static let harpie_profil = [
+        SKTexture(imageNamed: "h33"),
+        SKTexture(imageNamed: "h34"),
+        SKTexture(imageNamed: "h35"),
+        SKTexture(imageNamed: "h36"),
+        SKTexture(imageNamed: "h37"),
+        SKTexture(imageNamed: "h38"),
+        SKTexture(imageNamed: "h39"),
+        SKTexture(imageNamed: "h40")
+        
+    ]
+    static let harpie_derriere = [
+        SKTexture(imageNamed: "h41"),
+        SKTexture(imageNamed: "h42"),
+        SKTexture(imageNamed: "h43"),
+        SKTexture(imageNamed: "h44"),
+        SKTexture(imageNamed: "h45"),
+        SKTexture(imageNamed: "h46"),
+        SKTexture(imageNamed: "h47"),
+        SKTexture(imageNamed: "h48")
+        
+    ]
+    // attaque :
+    static let harpie_devant_atk = [
+        SKTexture(imageNamed: "h49"),
+        SKTexture(imageNamed: "h50"),
+        SKTexture(imageNamed: "h51"),
+        SKTexture(imageNamed: "h52"),
+        SKTexture(imageNamed: "h53"),
+        SKTexture(imageNamed: "h54"),
+        SKTexture(imageNamed: "h55"),
+        ]
+    static let harpie_profil_atk = [
+        SKTexture(imageNamed: "h56"),
+        SKTexture(imageNamed: "h57"),
+        SKTexture(imageNamed: "h58"),
+        SKTexture(imageNamed: "h59"),
+        SKTexture(imageNamed: "h60"),
+        SKTexture(imageNamed: "h61"),
+        SKTexture(imageNamed: "h62")
+    ]
+    static let harpie_derriere_atk = [
+        SKTexture(imageNamed: "h63"),
+        SKTexture(imageNamed: "h64"),
+        SKTexture(imageNamed: "h65"),
+        SKTexture(imageNamed: "h66"),
+        SKTexture(imageNamed: "h67"),
+        SKTexture(imageNamed: "h68"),
+        SKTexture(imageNamed: "h69"),
+        ]
+    
+    // sirenia ================
+    
+    static let sire_devant_im = [
+        SKTexture(imageNamed: "s1"),
+        SKTexture(imageNamed: "s2"),
+        SKTexture(imageNamed: "s3"),
+        SKTexture(imageNamed: "s4"),
+        SKTexture(imageNamed: "s5"),
+        SKTexture(imageNamed: "s6"),
+        SKTexture(imageNamed: "s7"),
+        SKTexture(imageNamed: "s8")
+    ]
+    
+    static let sire_profil_im = [
+        SKTexture(imageNamed: "s9"),
+        SKTexture(imageNamed: "s10"),
+        SKTexture(imageNamed: "s11"),
+        SKTexture(imageNamed: "s12"),
+        SKTexture(imageNamed: "s13"),
+        SKTexture(imageNamed: "s14"),
+        SKTexture(imageNamed: "s15"),
+        SKTexture(imageNamed: "s16")
+    ]
+    static let sire_derriere_im = [
+        SKTexture(imageNamed: "s17"),
+        SKTexture(imageNamed: "s18"),
+        SKTexture(imageNamed: "s19"),
+        SKTexture(imageNamed: "s20"),
+        SKTexture(imageNamed: "s21"),
+        SKTexture(imageNamed: "s22"),
+        SKTexture(imageNamed: "s23"),
+        SKTexture(imageNamed: "s24")
+        
+    ]
+    // immobile
+    static let sire_devant = [
+        SKTexture(imageNamed: "s25"),
+        SKTexture(imageNamed: "s26"),
+        SKTexture(imageNamed: "s27"),
+        SKTexture(imageNamed: "s28"),
+        SKTexture(imageNamed: "s29"),
+        SKTexture(imageNamed: "s30"),
+        SKTexture(imageNamed: "s31"),
+        SKTexture(imageNamed: "s32")
+        
+    ]
+    static let sire_profil = [
+        SKTexture(imageNamed: "s33"),
+        SKTexture(imageNamed: "s34"),
+        SKTexture(imageNamed: "s35"),
+        SKTexture(imageNamed: "s36"),
+        SKTexture(imageNamed: "s37"),
+        SKTexture(imageNamed: "s38"),
+        SKTexture(imageNamed: "s39"),
+        SKTexture(imageNamed: "s40")
+        
+    ]
+    static let sire_derriere = [
+        SKTexture(imageNamed: "s41"),
+        SKTexture(imageNamed: "s42"),
+        SKTexture(imageNamed: "s43"),
+        SKTexture(imageNamed: "s44"),
+        SKTexture(imageNamed: "s45"),
+        SKTexture(imageNamed: "s46"),
+        SKTexture(imageNamed: "s47"),
+        SKTexture(imageNamed: "s48")
+        
+    ]
+    // attaque :
+    static let sire_devant_atk = [
+        SKTexture(imageNamed: "s49"),
+        SKTexture(imageNamed: "s50"),
+        SKTexture(imageNamed: "s51"),
+        SKTexture(imageNamed: "s52"),
+        SKTexture(imageNamed: "s53"),
+        SKTexture(imageNamed: "s54"),
+        SKTexture(imageNamed: "s55"),
+        ]
+    static let sire_profil_atk = [
+        SKTexture(imageNamed: "s56"),
+        SKTexture(imageNamed: "s57"),
+        SKTexture(imageNamed: "s58"),
+        SKTexture(imageNamed: "s59"),
+        SKTexture(imageNamed: "s60"),
+        SKTexture(imageNamed: "s61"),
+        SKTexture(imageNamed: "s62")
+    ]
+    static let sire_derriere_atk = [
+        SKTexture(imageNamed: "s63"),
+        SKTexture(imageNamed: "s64"),
+        SKTexture(imageNamed: "s65"),
+        SKTexture(imageNamed: "s66"),
+        SKTexture(imageNamed: "s67"),
+        SKTexture(imageNamed: "s68"),
+        SKTexture(imageNamed: "s69"),
+        ]
+    
 }
 
 

@@ -37,7 +37,9 @@ struct InformationGeneral {
     func son_vlad_explo() {
         self.AudioNode?.runAction(SKAction.playSoundFileNamed("vladBim.mp3", waitForCompletion: false))
     }
-    
+    func son_roiFantomeChoc() {
+        self.AudioNode?.runAction(SKAction.playSoundFileNamed("ghost_puff.caf", waitForCompletion: false))
+    }
 }
 
 // case 
@@ -93,6 +95,10 @@ enum hero {
     case demoniste
     case moltanica
     case vlad
+    case roiFantome
+    case sirenia
+    case grimfield
+    case harpie
 }
 
 class batiment: SKSpriteNode {
@@ -161,6 +167,14 @@ class pierre: SKSpriteNode {
             self.carte = SKSpriteNode(texture: textures.carteMoltanica)
         case .vlad:
             self.carte = SKSpriteNode(texture: textures.carteVlad)
+        case .roiFantome:
+            self.carte = SKSpriteNode(texture: textures.carteRoiFantome)
+        case .grimfield:
+            self.carte = SKSpriteNode(texture: textures.carteGrimfield)
+        case .harpie:
+            self.carte = SKSpriteNode(texture: textures.carteReineHarpie)
+        case .sirenia:
+            self.carte = SKSpriteNode(texture: textures.carteSirenia)
         }
         
         self.addChild(self.carte!)
