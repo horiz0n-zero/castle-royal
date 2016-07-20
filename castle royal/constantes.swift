@@ -17,4 +17,6 @@ var collectionIlot = [CGFloat: ilotInfo]()
 var MatchTerminer = false
 var MatchGagnant = 0
 
+var collectionHero = [String: heroSprite]()
+
 // constantes 

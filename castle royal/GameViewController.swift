@@ -20,6 +20,7 @@ class GameViewController: UIViewController {
         let scene = GameScene(size: vue.frame.size)
         scene.scaleMode = .AspectFill
         vue.presentScene(scene)
+        vue.showsNodeCount = true 
     }
 
     override func shouldAutorotate() -> Bool {

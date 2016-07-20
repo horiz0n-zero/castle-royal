@@ -29,6 +29,13 @@ class GameScene: SKScene {
     required init?(coder aDecoder: NSCoder) {
         fatalError()
     }
+    
+    deinit {
+        
+        collectionHero.removeAll()
+        
+    }
+    
     override init(size: CGSize) {
         super.init(size: size)
         self.addChild(AudioNodeGeneral)
@@ -164,7 +171,7 @@ class GameScene: SKScene {
                 heroe.name = "hero"
                 heroe.info = heroInfo(colonne: colonne, ranger: ranger)
                 self.addChild(heroe)
-               
+                collectionHero[heroe.action] = heroe
             }
             
         }
@@ -216,7 +223,7 @@ class GameScene: SKScene {
         
         for i in 1...5 {
             
-            let pier = pierre(carte: self.randomCarte(), numero: i)
+            let pier = pierre(carte: hero.moltanica, numero: i)
             let info = collectionIlot[key(1, ranger: CGFloat(i))]
             pier.position = CGPoint(x: (info?.ilotReferance.position.x)!, y: (info?.ilotReferance.position.y)! - 130)
             self.addChild(pier)
@@ -357,6 +364,7 @@ class GameScene: SKScene {
                self.heroPosable?.removeFromParent()
                self.heroPosable = nil
                copy.name = "hero"
+               collectionHero[copy.action] = copy
                copy.initHalo()
                self.addChild(copy)
                selectionCarte.select = false

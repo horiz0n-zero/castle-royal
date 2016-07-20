@@ -78,6 +78,22 @@ struct textures {
     SKTexture(imageNamed: "moltaBim6")
     ]
     
+    static let moltaDesactive = [
+        SKTexture(imageNamed: "moltaD1"),
+        SKTexture(imageNamed: "moltaD2"),
+        SKTexture(imageNamed: "moltaD3"),
+        SKTexture(imageNamed: "moltaD4"),
+        SKTexture(imageNamed: "moltaD5"),
+        SKTexture(imageNamed: "moltaD6"),
+        SKTexture(imageNamed: "moltaD7"),
+        SKTexture(imageNamed: "moltaD8"),
+        SKTexture(imageNamed: "moltaD9"),
+        SKTexture(imageNamed: "moltaD10"),
+        SKTexture(imageNamed: "moltaD11"),
+        SKTexture(imageNamed: "moltaD12"),
+        SKTexture(imageNamed: "moltaD13")
+    ]
+    
     static let anim_vladBim = [
     SKTexture(imageNamed: "vladBim1"),
     SKTexture(imageNamed: "vladBim2"),
@@ -95,8 +111,58 @@ struct textures {
     SKTexture(imageNamed: "cristalBBim4"),
     SKTexture(imageNamed: "cristalBBim5")
     ]
-
     
+    static let anim_eclat_sirenia = [
+    SKTexture(imageNamed: "anim_eclatB1"),
+    SKTexture(imageNamed: "anim_eclatB2"),
+    SKTexture(imageNamed: "anim_eclatB3"),
+    SKTexture(imageNamed: "anim_eclatB4"),
+    SKTexture(imageNamed: "anim_eclatB5")
+    ]
+
+    static let anim_eclat_grim = [
+        SKTexture(imageNamed: "anim_grimE1"),
+        SKTexture(imageNamed: "anim_grimE2"),
+        SKTexture(imageNamed: "anim_grimE3"),
+        SKTexture(imageNamed: "anim_grimE4"),
+        SKTexture(imageNamed: "anim_grimE5"),
+        SKTexture(imageNamed: "anim_grimE6"),
+        SKTexture(imageNamed: "anim_grimE7"),
+        SKTexture(imageNamed: "anim_grimE8")
+    ]
+    
+    static let anim_eclat_grimDeux = [
+        SKTexture(imageNamed: "anim_proj_grim21"),
+        SKTexture(imageNamed: "anim_proj_grim22"),
+        SKTexture(imageNamed: "anim_proj_grim23"),
+        SKTexture(imageNamed: "anim_proj_grim24"),
+        SKTexture(imageNamed: "anim_proj_grim25"),
+        SKTexture(imageNamed: "anim_proj_grim26"),
+        SKTexture(imageNamed: "anim_proj_grim27"),
+        SKTexture(imageNamed: "anim_proj_grim28")
+    ]
+    
+    static let trans = [
+    SKTexture(imageNamed: "transformation1"),
+    SKTexture(imageNamed: "transformation2"),
+    SKTexture(imageNamed: "transformation3"),
+    SKTexture(imageNamed: "transformation4"),
+    SKTexture(imageNamed: "transformation5"),
+    SKTexture(imageNamed: "transformation6"),
+    SKTexture(imageNamed: "transformation7"),
+    SKTexture(imageNamed: "transformation8"),
+    SKTexture(imageNamed: "transformation9"),
+    SKTexture(imageNamed: "transformation10")
+    ]
+    
+    static let anim_projectile_grim = [
+    SKTexture(imageNamed: "anim_proj_grim1"),
+    SKTexture(imageNamed: "anim_proj_grim2")
+    ]
+    
+    static let plume = SKTexture(imageNamed: "plume")
+    static let flechette = SKTexture(imageNamed: "flechette")
+    static let capaciter = SKTexture(imageNamed: "cap")
     // mage
     static let mage_devant = [
         SKTexture(imageNamed: "100"),
@@ -1013,6 +1079,107 @@ struct textures {
         SKTexture(imageNamed: "s67"),
         SKTexture(imageNamed: "s68"),
         SKTexture(imageNamed: "s69"),
+        ]
+    
+    
+    // grimfield version demon
+    
+    static let grimd_devant_im = [
+        SKTexture(imageNamed: "gd1"),
+        SKTexture(imageNamed: "gd2"),
+        SKTexture(imageNamed: "gd3"),
+        SKTexture(imageNamed: "gd4"),
+        SKTexture(imageNamed: "gd5"),
+        SKTexture(imageNamed: "gd6"),
+        SKTexture(imageNamed: "gd7"),
+        SKTexture(imageNamed: "gd8")
+    ]
+    
+    static let grimd_profil_im = [
+        SKTexture(imageNamed: "gd9"),
+        SKTexture(imageNamed: "gd10"),
+        SKTexture(imageNamed: "gd11"),
+        SKTexture(imageNamed: "gd12"),
+        SKTexture(imageNamed: "gd13"),
+        SKTexture(imageNamed: "gd14"),
+        SKTexture(imageNamed: "gd15"),
+        SKTexture(imageNamed: "gd16")
+    ]
+    static let grimd_derriere_im = [
+        SKTexture(imageNamed: "gd17"),
+        SKTexture(imageNamed: "gd18"),
+        SKTexture(imageNamed: "gd19"),
+        SKTexture(imageNamed: "gd20"),
+        SKTexture(imageNamed: "gd21"),
+        SKTexture(imageNamed: "gd22"),
+        SKTexture(imageNamed: "gd23"),
+        SKTexture(imageNamed: "gd24")
+        
+    ]
+    // immobile
+    static let grimd_devant = [
+        SKTexture(imageNamed: "gd25"),
+        SKTexture(imageNamed: "gd26"),
+        SKTexture(imageNamed: "gd27"),
+        SKTexture(imageNamed: "gd28"),
+        SKTexture(imageNamed: "gd29"),
+        SKTexture(imageNamed: "gd30"),
+        SKTexture(imageNamed: "gd31"),
+        SKTexture(imageNamed: "gd32")
+        
+    ]
+    static let grimd_profil = [
+        SKTexture(imageNamed: "gd33"),
+        SKTexture(imageNamed: "gd34"),
+        SKTexture(imageNamed: "gd35"),
+        SKTexture(imageNamed: "gd36"),
+        SKTexture(imageNamed: "gd37"),
+        SKTexture(imageNamed: "gd38"),
+        SKTexture(imageNamed: "gd39"),
+        SKTexture(imageNamed: "gd40")
+        
+    ]
+    static let grimd_derriere = [
+        SKTexture(imageNamed: "gd41"),
+        SKTexture(imageNamed: "gd42"),
+        SKTexture(imageNamed: "gd43"),
+        SKTexture(imageNamed: "gd44"),
+        SKTexture(imageNamed: "gd45"),
+        SKTexture(imageNamed: "gd46"),
+        SKTexture(imageNamed: "gd47"),
+        SKTexture(imageNamed: "gd48")
+        
+    ]
+    // attaque :
+    static let grimd_devant_atk = [
+        SKTexture(imageNamed: "gd49"),
+        SKTexture(imageNamed: "gd50"),
+        SKTexture(imageNamed: "gd51"),
+        SKTexture(imageNamed: "gd52"),
+        SKTexture(imageNamed: "gd53"),
+        SKTexture(imageNamed: "gd54"),
+        SKTexture(imageNamed: "gd55"),
+        SKTexture(imageNamed: "gd56")
+        ]
+    static let grimd_profil_atk = [
+        SKTexture(imageNamed: "gd57"),
+        SKTexture(imageNamed: "gd58"),
+        SKTexture(imageNamed: "gd59"),
+        SKTexture(imageNamed: "gd60"),
+        SKTexture(imageNamed: "gd61"),
+        SKTexture(imageNamed: "gd62"),
+        SKTexture(imageNamed: "gd63"),
+        SKTexture(imageNamed: "gd64")
+    ]
+    static let grimd_derriere_atk = [
+        SKTexture(imageNamed: "gd65"),
+        SKTexture(imageNamed: "gd66"),
+        SKTexture(imageNamed: "gd67"),
+        SKTexture(imageNamed: "gd68"),
+        SKTexture(imageNamed: "gd69"),
+        SKTexture(imageNamed: "gd70"),
+        SKTexture(imageNamed: "gd71"),
+        SKTexture(imageNamed: "gd72")
         ]
     
 }

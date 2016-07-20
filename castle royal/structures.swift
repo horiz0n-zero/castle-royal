@@ -113,7 +113,7 @@ class batiment: SKSpriteNode {
                 information.son_batiment_detruit()
                 MatchTerminer = true
                 MatchGagnant = self.type == ilotContient.batimentAllier ? 1 : 2
-                print(MatchGagnant, self.type)
+                
                 self.removeFromParent()
                 
             } else {
