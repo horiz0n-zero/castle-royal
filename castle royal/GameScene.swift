@@ -129,7 +129,21 @@ class GameScene: SKScene {
                 
             })
             ])))
-        
+        information.AnimationNode?.runAction(SKAction.repeatActionForever(SKAction.sequence([
+            SKAction.waitForDuration(4, withRange: 3),
+            SKAction.runBlock({
+                let nunu = SKSpriteNode(texture: textures.nuage)
+                nunu.position = CGPoint(x: self.frame.width + textures.nuage.size().width, y: CGFloat.random(self.frame.height))
+                nunu.zPosition = -1
+                nunu.size = CGSize(width: CGFloat.random(min: 500, max: 700), height: CGFloat.random(min: 80, max: 160))
+                self.addChild(nunu)
+                nunu.runAction(SKAction.sequence([
+                    SKAction.moveTo(CGPoint(x: self.frame.origin.x - textures.nuage.size().width, y: nunu.position.y), duration: 20),
+                    SKAction.waitForDuration(6),
+                    SKAction.removeFromParent()
+                    ]))
+            })
+            ])))
         
         
     }
@@ -187,10 +201,6 @@ class GameScene: SKScene {
             }
             
         })
-            
-        
-        
-        
     }
     
     func randomCarte() -> hero {
@@ -223,7 +233,7 @@ class GameScene: SKScene {
         
         for i in 1...5 {
             
-            let pier = pierre(carte: hero.moltanica, numero: i)
+            let pier = pierre(carte: hero.grimfield, numero: i)
             let info = collectionIlot[key(1, ranger: CGFloat(i))]
             pier.position = CGPoint(x: (info?.ilotReferance.position.x)!, y: (info?.ilotReferance.position.y)! - 130)
             self.addChild(pier)
@@ -274,7 +284,7 @@ class GameScene: SKScene {
                     }
                    
                    
-                }
+                } 
                 
             }
             

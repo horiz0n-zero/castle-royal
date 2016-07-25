@@ -14,7 +14,7 @@ struct textures {
     static let zone = SKTexture(imageNamed: "zone")
     static let zone_deplacement = SKTexture(imageNamed: "zone_deploiment")
     static let zone_select = SKTexture(imageNamed: "zone_select")
-    
+    static let nuage = SKTexture(imageNamed: "nuage")
     static let statue = SKTexture(imageNamed: "statue")
     
     static let pierre = SKTexture(imageNamed: "pierre")

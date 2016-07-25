@@ -12,6 +12,7 @@
 		881926171D3BD3D800733332 /* cristal_Bleu.sks in Resources */ = {isa = PBXBuildFile; fileRef = 881926151D3BD3D800733332 /* cristal_Bleu.sks */; };
 		8819261B1D3BE4A600733332 /* Battle_Lose.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 881926191D3BE4A600733332 /* Battle_Lose.mp3 */; };
 		8819261C1D3BE4A600733332 /* Battle_Win.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8819261A1D3BE4A600733332 /* Battle_Win.mp3 */; };
+		8831F2E71D3FF5830047E7A0 /* poison_spell_01.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8831F2E61D3FF5830047E7A0 /* poison_spell_01.wav */; };
 		88E54D6F1D3921B0007443E7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E54D6E1D3921B0007443E7 /* AppDelegate.swift */; };
 		88E54D731D3921B0007443E7 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E54D721D3921B0007443E7 /* GameScene.swift */; };
 		88E54D751D3921B0007443E7 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E54D741D3921B0007443E7 /* GameViewController.swift */; };
@@ -38,6 +39,7 @@
 		881926151D3BD3D800733332 /* cristal_Bleu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = cristal_Bleu.sks; sourceTree = "<group>"; };
 		881926191D3BE4A600733332 /* Battle_Lose.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Battle_Lose.mp3; sourceTree = "<group>"; };
 		8819261A1D3BE4A600733332 /* Battle_Win.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Battle_Win.mp3; sourceTree = "<group>"; };
+		8831F2E61D3FF5830047E7A0 /* poison_spell_01.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = poison_spell_01.wav; sourceTree = "<group>"; };
 		88E54D6B1D3921B0007443E7 /* castle royal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "castle royal.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		88E54D6E1D3921B0007443E7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		88E54D721D3921B0007443E7 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 				881926191D3BE4A600733332 /* Battle_Lose.mp3 */,
 				8819261A1D3BE4A600733332 /* Battle_Win.mp3 */,
 				88EAA4641D3CF61100911A4D /* ghost_puff.caf */,
+				8831F2E61D3FF5830047E7A0 /* poison_spell_01.wav */,
 				88E54D6D1D3921B0007443E7 /* castle royal */,
 				88E54D6C1D3921B0007443E7 /* Products */,
 			);
@@ -186,6 +189,7 @@
 				88EEB5881D3AD96D00709429 /* baby blocks.ttf in Resources */,
 				881926101D3BA10400733332 /* pioche.mp3 in Resources */,
 				88E54D781D3921B0007443E7 /* Main.storyboard in Resources */,
+				8831F2E71D3FF5830047E7A0 /* poison_spell_01.wav in Resources */,
 				88EEB57F1D3A5E6100709429 /* select.caf in Resources */,
 				8819261C1D3BE4A600733332 /* Battle_Win.mp3 in Resources */,
 				88EAA4651D3CF61100911A4D /* ghost_puff.caf in Resources */,

@@ -40,6 +40,11 @@ struct InformationGeneral {
     func son_roiFantomeChoc() {
         self.AudioNode?.runAction(SKAction.playSoundFileNamed("ghost_puff.caf", waitForCompletion: false))
     }
+    func son_poison() {
+        self.AudioNode?.runAction(SKAction.playSoundFileNamed("poison_spell_01.wav", waitForCompletion: false))
+    }
+    
+    
 }
 
 // case 
@@ -58,8 +63,6 @@ class ilot: SKSpriteNode {
     var ide: CGFloat!
     var colonne: CGFloat!
     var ranger: CGFloat!
-    
-   
 }
 
 struct ilotInfo {
@@ -103,7 +106,7 @@ enum hero {
 
 class batiment: SKSpriteNode {
     var ide: CGFloat = 0.0
-    let label = SKLabelNode(text: "4500")
+    let label = SKLabelNode(text: "")
     var type: ilotContient = ilotContient.batimentAllier
     var pv: Int = 5000 {
         didSet {

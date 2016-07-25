@@ -27,7 +27,7 @@ public class heroSprite: SKSpriteNode {
     var t_profilATK: [SKTexture]!
     var t_profilIMO: [SKTexture]!
     var heroType: hero!
-    private var selfMouvement: mouvement!
+    private var lastAttaque: heroSprite? = nil
     
     var CapaciterIndicateurMax: UInt8 = 3
     var CapaciterIndicateur: UInt8 = 0 {
@@ -93,37 +93,21 @@ public class heroSprite: SKSpriteNode {
             }
         case hero.moltanica?:
             
-            func check(ile: ilotInfo) {
-                if let enemie = ile.hero {
-                    if enemie.pv >= 0 {
-                    enemie.degat -= 100
-                    let sprite = SKSpriteNode(texture: textures.moltaDesactive[0])
-                    information.AnimationNode?.addChild(sprite)
-                    sprite.position = enemie.position
-                    sprite.zPosition = enemie.zPosition + 2
-                    sprite.size = CGSize(width: information.solwidth, height: information.solwidth)
-                    sprite.runAction(SKAction.sequence([
-                        SKAction.animateWithTextures(textures.moltaDesactive, timePerFrame: 0.05),
-                        SKAction.waitForDuration(0.65),
-                        SKAction.removeFromParent()
-                        ]))
-                    print(enemie.degat)
-                    }
-                }
-            }
+            if let lastAttque = self.lastAttaque {
             
-            switch self.selfMouvement {
-            case .bas(let b)?:
-                check(b)
-            case .droit(let d)?:
-                check(d)
-            case .gauche(let g)?:
-                check(g)
-            case .haut(let h)?:
-                check(h)
-            default: break
+                let sprite = SKSpriteNode(texture: textures.moltaDesactive[0])
+                information.AnimationNode?.addChild(sprite)
+                sprite.position = lastAttque.position
+                sprite.zPosition = lastAttque.zPosition + 2
+                sprite.size = CGSize(width: information.solwidth, height: information.solwidth)
+                sprite.runAction(SKAction.sequence([
+                    SKAction.animateWithTextures(textures.moltaDesactive, timePerFrame: 0.05),
+                    SKAction.waitForDuration(0.65),
+                    SKAction.removeFromParent()
+                    ]))
+                
             }
-            
+
         case hero.roiFantome?:
             for (_, enemie) in collectionHero.enumerate() {
                
@@ -147,7 +131,64 @@ public class heroSprite: SKSpriteNode {
                 
             }
         case hero.vlad?:
-        print("vlad")
+        
+            let haut = self.key(colonnesup: 1, rangersup: 0)
+            let bas = self.key(colonnesup: -1, rangersup: 0)
+            let gauche = self.key(colonnesup: 0, rangersup: -1)
+            let droit = self.key(colonnesup: 0, rangersup: 1)
+            if let h = collectionIlot[haut] {
+                if let hero = h.hero {
+                    if h.contient == self.TypeInverse {
+                   self.runAction(SKAction.repeatAction(SKAction.sequence([
+                    SKAction.waitForDuration(0.5),
+                    SKAction.runBlock({
+                        hero.pv -= 80
+                    })
+                    ]), count: 3))
+                    }
+                    print(h.contient, h.hero)
+                }
+            }
+            if let b = collectionIlot[bas] {
+                if let hero = b.hero {
+                    if b.contient == self.TypeInverse {
+                    self.runAction(SKAction.repeatAction(SKAction.sequence([
+                        SKAction.waitForDuration(0.5),
+                        SKAction.runBlock({
+                            hero.pv -= 80
+                        })
+                        ]), count: 3))
+                    }
+                    print(b.contient, b.hero)
+                }
+            }
+            if let g = collectionIlot[gauche] {
+                if let hero = g.hero {
+                    if g.contient == self.TypeInverse {
+                    self.runAction(SKAction.repeatAction(SKAction.sequence([
+                        SKAction.waitForDuration(0.5),
+                        SKAction.runBlock({
+                            hero.pv -= 80
+                        })
+                        ]), count: 3))
+                    }
+                    print(g.contient, g.hero)
+                }
+            }
+            if let d = collectionIlot[droit] {
+                if let hero = d.hero {
+                    if d.contient == self.TypeInverse {
+                    self.runAction(SKAction.repeatAction(SKAction.sequence([
+                        SKAction.waitForDuration(0.5),
+                        SKAction.runBlock({
+                            hero.pv -= 35
+                        })
+                        ]), count: 3))
+                    }
+                    print(d.contient, d.hero)
+                }
+            }
+            
         default:
             print("le hero ", self.heroType, "n'a pas pu utiliser sa capaciter car elle n'est pas suporter ")
         }
@@ -340,7 +381,8 @@ public class heroSprite: SKSpriteNode {
         collectionIlot[self.key()]?.contient = ilotContient.vide
         collectionIlot[self.key()]?.hero = nil 
         }
-        collectionIlot[self.key()]?.hero = self 
+        collectionIlot[self.key()]?.hero = self
+        
         if collectionIlot[self.key()]?.contient == ilotContient.deploiementAllier || collectionIlot[self.key()]?.contient == ilotContient.deploiementEnemie && collectionIlot[self.key()]?.hero != nil {
             collectionIlot[self.key()]?.hero = nil
         }
@@ -474,10 +516,9 @@ public class heroSprite: SKSpriteNode {
         
         let jevaisoumaintenant = Int(arc4random_uniform(UInt32(mouvements.count)))
         self.vider()
-        self.selfMouvement = mouvements[jevaisoumaintenant]
-        self.sedeplacer(self.selfMouvement)
+        self.sedeplacer(mouvements[jevaisoumaintenant])
         
-    }
+    } 
     
     private func sedeplacer(movement: mouvement) {
         self.removeActionForKey(action)
@@ -831,7 +872,7 @@ public class heroSprite: SKSpriteNode {
             
         }
         if let heroCible = cible.hero {
-            
+            self.lastAttaque = cible.hero
             information.AnimationNode?.runAction(SKAction.sequence([
                 SKAction.waitForDuration(0.9),
                 SKAction.runBlock({
@@ -839,6 +880,8 @@ public class heroSprite: SKSpriteNode {
                 })
                 ]))
             
+        } else {
+            self.lastAttaque = nil 
         }
         
         
@@ -1052,6 +1095,7 @@ class grimfield: heroSprite { // diaboluc ======================================
             self.t_derrierIMO = textures.grim_derriere_im
             self.t_devantIMO = textures.grim_devant_im
         } else {
+            information.son_poison()
             self.t_devant = textures.grimd_devant
             self.t_profil = textures.grimd_profil
             self.t_derrier = textures.grimd_derriere
