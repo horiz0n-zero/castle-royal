@@ -38,6 +38,12 @@ class Hero_name: heroSprite { // hero name <br/>
         self.degat = 175 // attack point<br/>
         self.initLabel()<br/>
         self.flying = true // flying or not ? this variable is currently unused <br/>
+        <br/>
+        Optional : <br/>
+        self.CapaciterIndicateurMax = x // set the number of cristal/attack required before use abilitie <br/>
+        self.CapaciterIndicateur = x // deploy a hero with max cristal if you want. <br/>
+        // by default 3, 0 <br/>
+        <br/>
     }<br/>
     <br/>
     required init?(coder aDecoder: NSCoder) {<br/>
@@ -45,3 +51,18 @@ class Hero_name: heroSprite { // hero name <br/>
     }<br/>
     <br/>
 }<br/>
+
+Add attack and abilities :
+
+In hero.swift look up, class heroSprite { }
+
+for a new abilities, private func capaciter() // call when a hero got all maximun cristals on him and attack
+
+just add a new case : case hero.NewHero?:
+// your code here
+
+for attack just add animations in private func projectile() { }
+add a new case with herotype.
+
+
+
